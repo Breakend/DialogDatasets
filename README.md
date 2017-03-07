@@ -24,3 +24,11 @@ Link to Download (need to fill our request form): http://www.cambridge.org/us/ca
 Link to download (5) : http://workshop.colips.org/dstc5/
 
 Link to download (4) : http://www.colips.org/workshop/dstc4/
+
+**Loqui**
+
+Link to Download: https://academiccommons.columbia.edu/catalog/ac:176612
+
+**MRDA**
+
+Link to Download: http://www1.icsi.berkeley.edu/~ees/dadb/

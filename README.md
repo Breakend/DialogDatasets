@@ -32,3 +32,9 @@ Link to Download: https://academiccommons.columbia.edu/catalog/ac:176612
 **MRDA**
 
 Link to Download: http://www1.icsi.berkeley.edu/~ees/dadb/
+
+**Verbmobil**
+
+Stats: http://verbmobil.dfki.de/facts.html
+
+Link to download: https://www.phonetik.uni-muenchen.de/Bas/BasVM1eng.html

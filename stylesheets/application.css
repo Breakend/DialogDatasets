@@ -142,6 +142,13 @@ tr td:hover {
 	float: left;
 	width: 50%;
 }
+#samsung_logo {
+	float: left;
+	width: 33%;
+}
+#samsung_logo img {
+  /*height: 220px;*/
+}
 #ncfrn_logo img {
 	width: 200px;
 	height: 60px;

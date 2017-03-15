@@ -1,1977 +1,762 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-           "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
-<meta name="GENERATOR" content="TtH 4.06">
- <style type="text/css"> div.p { margin-top: 7pt;}</style>
- <style type="text/css"><!--
- td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
- td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
- td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
- td div.norm {line-height:normal;}
- span.roman {font-family: serif; font-style: normal; font-weight: normal;}
- span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
- span.overacc1 {position: relative;  left: .6em; top: -1.2ex;} --></style>
- <style type="text/css"><!--
- .tiny {font-size:30%;}
- .scriptsize {font-size:xx-small;}
- .footnotesize {font-size:x-small;}
- .smaller {font-size:smaller;}
- .small {font-size:small;}
- .normalsize {font-size:medium;}
- .large {font-size:large;}
- .larger {font-size:x-large;}
- .largerstill {font-size:xx-large;}
- .huge {font-size:300%;}
- --></style>
-
-
-<title> A Survey of Available Corpora for Building Data-Driven Dialogue Systems</title>
-
-<h1 align="center">A Survey of Available Corpora for Building <br />Data-Driven Dialogue Systems</h1>
-
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-
-<h3 align="center">
-Iulian Vlad Serban<br />
-Ryan Lowe<br />
-Peter Henderson  <br />
-Laurent Charlin <br />
-Joelle Pineau <br />
- </h3>
-
-<div class="p"><!----></div>
-
-<h3 align="center"> </h3>
-
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-
-<h2> Abstract</h2>
-During the past decade, several areas of speech and language understanding have witnessed substantial breakthroughs from the use of data-driven models.   In the area of dialogue systems, the trend is less obvious, and most practical systems are still built through significant engineering and expert knowledge.   Nevertheless, several recent results suggest that data-driven approaches are feasible and quite promising.  To facilitate research in this area, we have carried out a wide survey of publicly available datasets suitable for data-driven learning of dialogue systems. We discuss important characteristics of these datasets, how they can be used to learn diverse dialogue strategies, and their other potential uses. We also examine methods for transfer learning between datasets and the use of external knowledge. Finally, we discuss appropriate choice of evaluation metrics for the learning objective.
-
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-<a id="tth_tAb1">
-</a> <div style="text-align:center"><div class="footnotesize">
-<table border="1">
-<tr><td align="left">Name </td><td align="left">Type </td><td align="left">Topics </td><td align="center">Avg. # </td><td align="center">Total # </td><td align="center">Total # </td><td align="left">Description </td></tr>
-<tr><td align="left"></td><td align="left"></td><td align="left"></td><td align="center">of turns </td><td align="center">of dialogues </td><td align="center">of words </td><td align="left"></td></tr><tr><td></td></tr>
-<tr><td align="left">DSTC1 [<a href="#williams2013dialog" class="tth_citeref">Williams et&nbsp;al., 2013</a>] </td><td align="left">Spoken </td><td align="left">Bus schedules </td><td align="center">13.56 </td><td align="center">15,000 </td><td align="center">3.7M </td><td align="left">Bus ride information system </td></tr>
-<tr><td align="left">DSTC2 [<a href="#henderson2014second" class="tth_citeref">Henderson et&nbsp;al., 2014b</a>] </td><td align="left">Spoken </td><td align="left">Restaurants </td><td align="center">7.88 </td><td align="center">3,000 </td><td align="center">432K </td><td align="left">Restaurant booking system </td></tr>
-<tr><td align="left">DSTC3 [<a href="#henderson2014dialog" class="tth_citeref">Henderson et&nbsp;al., 2014a</a>] </td><td align="left">Spoken </td><td align="left">Tourist information</td><td align="center">8.27 </td><td align="center">2,265 </td><td align="center">403K </td><td align="left">Information for tourists </td></tr>
-<tr><td align="left">CMU Communicator Corpus </td><td align="left">Spoken </td><td align="left">Travel </td><td align="center">11.67 </td><td align="center">15,481 </td><td align="center">2M* </td><td align="left">Travel planning and booking system </td></tr>
-<tr><td align="left">[<a href="#bennett2002carnegie" class="tth_citeref">Bennett and Rudnicky, 2002</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">ATIS Pilot Corpus </td><td align="left">Spoken </td><td align="left">Travel </td><td align="center">25.4 </td><td align="center">41 </td><td align="center">11.4K* </td><td align="left">Travel planning and booking system </td></tr>
-<tr><td align="left">[<a href="#hemphill1990atis" class="tth_citeref">Hemphill et&nbsp;al., 1990</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">Ritel Corpus </td><td align="left">Spoken </td><td align="left">Unrestricted/ Diverse Topics </td><td align="center">9.3* </td><td align="center">582 </td><td align="center">60k </td><td align="left">An annotated open-domain question </td></tr>
-<tr><td align="left">[<a href="#rosset2006ritel" class="tth_citeref">Rosset and Petel, 2006</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">answering spoken dialogue system </td></tr>
-<tr><td align="left">DIALOG Mathematical </td><td align="left">Spoken </td><td align="left">Mathematics </td><td align="center">12 </td><td align="center">66 </td><td align="center">8.7K* </td><td align="left">Humans interact with computer system </td></tr>
-<tr><td align="left">Proofs [<a href="#wolska2004annotated" class="tth_citeref">Wolska et&nbsp;al., 2004</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">to do mathematical theorem proving </td></tr>
-<tr><td align="left">MATCH Corpus </td><td align="left">Spoken </td><td align="left">Appointment Scheduling </td><td align="center">14.0 </td><td align="center">447 </td><td align="center">69K* </td><td align="left">A system for scheduling appointments. </td></tr>
-<tr><td align="left">[<a href="#georgila2010match" class="tth_citeref">Georgila et&nbsp;al., 2010</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">Includes dialogue act annotations </td></tr>
-<tr><td align="left">Maluuba Frames </td><td align="left">Chat, QA &amp; </td><td align="left">Travel &amp; Vacation </td><td align="center">15 </td><td align="center">1369 </td><td align="center">- </td><td align="left">For goal-driven dialogue systems.</td></tr>
-<tr><td align="left">[<a href="#elframes" class="tth_citeref">El&nbsp;Asri et&nbsp;al., 2017</a>] </td><td align="left">Recommendation </td><td align="left">Booking </td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">Semantic frames labeled and actions</td></tr>
-<tr><td align="left"></td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">taken on a knowledge-base annotated.</td></tr></table>
-
-
-<div style="text-align:center">Table 1: Human-machine dialogue datasets. Starred (*) numbers are approximated based on the average number of words per utterance. Datasets marked with () indicate Wizard-of-Oz dialogues, where the machine is secretly operated by a human.</div>
-<a id="tab:hc">
-</a>
-</div></div>
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-<a id="tth_tAb2">
-</a>
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-<a id="tth_tAb3">
-</a>
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-<a id="tth_tAb4">
-</a> 
-<div class="p"><!----></div>
-
-
-
-<div class="p"><!----></div>
-
-<div class="p"><!----></div>
-<a id="tth_tAb5">
-</a> <div style="text-align:center"><div class="footnotesize">
-<table border="1">
-<tr><td align="left">Name </td><td align="left">Type </td><td align="left">Topics </td><td align="center">Avg. # </td><td align="center">Total # </td><td align="center">Total # </td><td align="left">Description </td></tr>
-<tr><td align="left"></td><td align="left"></td><td align="left"></td><td align="center">of turns </td><td align="center">of dialogues </td><td align="center">of words </td><td align="left"></td></tr><tr><td></td></tr>
-<tr><td align="left">NPS Chat Corpus </td><td align="left">Chat </td><td align="left">Unrestricted </td><td align="center">&nbsp;704 </td><td align="center">15 </td><td align="center">100M </td><td align="left">Posts from age-specific online chat rooms. </td></tr>
-<tr><td align="left">[<a href="#forsyth2007lexical" id="CITEforsyth2007lexical" class="tth_citation">Forsyth and Martell, 2007</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">Twitter Corpus </td><td align="left">Microblog </td><td align="left">Unrestricted </td><td align="center">2 </td><td align="center">1,300,000 </td><td align="center">&nbsp;125M </td><td align="left">Tweets and replies extracted from Twitter </td></tr>
-<tr><td align="left">[<a href="#Ritter:2010:UMT:1857999.1858019" id="CITERitter:2010:UMT:1857999.1858019" class="tth_citation">Ritter et&nbsp;al., 2010</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">Twitter Triple Corpus </td><td align="left">Microblog </td><td align="left">Unrestricted </td><td align="center">3 </td><td align="center">4,232 </td><td align="center">&nbsp;65K </td><td align="left">A-B-A triples extracted from Twitter </td></tr>
-<tr><td align="left">[<a href="#sordoni2015aneural" class="tth_citeref">Sordoni et&nbsp;al., 2015</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">UseNet Corpus </td><td align="left">Microblog </td><td align="left">Unrestricted </td><td align="center">&nbsp;687 </td><td align="center">47860 </td><td align="center">&nbsp;7B </td><td align="left">UseNet forum postings </td></tr>
-<tr><td align="left">[<a href="#shaoul2009usenet" id="CITEshaoul2009usenet" class="tth_citation">Shaoul and Westbury, 2009</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
-<tr><td align="left">NUS SMS Corpus  </td><td align="left">SMS messages </td><td align="left">Unrestricted </td><td align="center">&nbsp;18 </td><td align="center">&nbsp;3K </td><td align="center">580,668*<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup> </td><td align="left">SMS messages collected between two  </td></tr>
-<tr><td align="left">[<a href="#chen2013creating" id="CITEchen2013creating" class="tth_citation">Chen and Kan, 2013</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">users, with timing analysis. </td></tr>
-<tr><td align="left">Reddit Domestic Abuse Corpus </td><td align="left">Forum </td><td align="left">Abuse help </td><td align="center">17.53 </td><td align="center">21,133 </td><td align="center">19M-103M <sup>\triangle</sup> </td><td align="left">Reddit posts from either domestic abuse </td></tr>
-<tr><td align="left">[<a href="#ray4183analysis" id="CITEray4183analysis" class="tth_citation">Schrading et&nbsp;al., 2015</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">subreddits, or general chat. </td></tr>
-<tr><td align="left">Settlers of Catan </td><td align="left">Chat </td><td align="left">Game terms </td><td align="center">&nbsp;95 </td><td align="center">21 </td><td align="center">- </td><td align="left">Conversations between players </td></tr>
-<tr><td align="left">[<a href="#afantenos2012developing" id="CITEafantenos2012developing" class="tth_citation">Afantenos et&nbsp;al., 2012</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">in the game `Settlers of Catan'</td></tr>
-<tr><td align="left">Cards Corpus </td><td align="left">Chat </td><td align="left">Game terms </td><td align="center">38.1 </td><td align="center">1,266 </td><td align="center">282K </td><td align="left">Conversations between players </td></tr>
-<tr><td align="left">[<a href="#djalali2012corpus" id="CITEdjalali2012corpus" class="tth_citation">Djalali et&nbsp;al., 2012</a>] </td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">playing `Cards world' </td></tr>
-<tr><td align="left">Agreement in Wikipedia Talk Pages </td><td align="left">Forum </td><td align="left">Unrestricted </td><td align="center">2 </td><td align="center">822 </td><td align="center">110K </td><td align="left">LiveJournal and Wikipedia Discussions forum threads. </td></tr>
-<tr><td align="left">[<a href="#andreas2012annotating" id="CITEandreas2012annotating" class="tth_citation">Andreas et&nbsp;al., 2012</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">Agreement type and level annotated.</td></tr>
-<tr><td align="left">Agreement by Create Debaters </td><td align="left">Forum </td><td align="left">Unrestricted </td><td align="center">2</td><td align="center">10K </td><td align="center">1.4M </td><td align="left">Create Debate forum conversations. Annotated what type</td></tr>
-<tr><td align="left">[<a href="#rosenthal2015couldn" id="CITErosenthal2015couldn" class="tth_citation">Rosenthal and McKeown, 2015</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">of agreement (e.g. paraphrase) or disagreement.</td></tr>
-<tr><td align="left">Internet Argument Corpus </td><td align="left">Forum </td><td align="left">Politics </td><td align="center">&nbsp;35.45 </td><td align="center">&nbsp;11K </td><td align="center">&nbsp;73M </td><td align="left">Debates about specific </td></tr>
-<tr><td align="left">[<a href="#walker2012corpus" id="CITEwalker2012corpus" class="tth_citation">Walker et&nbsp;al., 2012b</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">political or moral positions </td></tr>
-<tr><td align="left">MPC Corpus </td><td align="left">Chat </td><td align="left">Social tasks </td><td align="center">520 </td><td align="center">14 </td><td align="center">58K </td><td align="left">Conversations about general, </td></tr>
-<tr><td align="left">[<a href="#shaikh2010mpc" id="CITEshaikh2010mpc" class="tth_citation">Shaikh et&nbsp;al., 2010</a>]</td><td align="left"></td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">political, and interview topics </td></tr>
-<tr><td align="left">Ubuntu Dialogue Corpus </td><td align="left">Chat </td><td align="left">Ubuntu Operating </td><td align="center">7.71 </td><td align="center">930,000 </td><td align="center">100M </td><td align="left">Dialogues extracted from </td></tr>
-<tr><td align="left">[<a href="#lowe2015ubuntu" class="tth_citeref">Lowe et&nbsp;al., 2015a</a>] </td><td align="left"></td><td align="left">System</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">Ubuntu chat stream on IRC </td></tr>
-<tr><td align="left">Ubuntu Chat Corpus </td><td align="left">Chat </td><td align="left">Ubuntu Operating </td><td align="center">&nbsp;3381.6 </td><td align="center">10665 </td><td align="center">&nbsp;2B*<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup> </td><td align="left">Chat stream scraped from </td></tr>
-<tr><td align="left">[<a href="#uthus2013ubuntu" id="CITEuthus2013ubuntu" class="tth_citation">Uthus and Aha, 2013</a>]</td><td align="left"></td><td align="left">System</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">IRC logs (no dialogues extracted) </td></tr>
-<tr><td align="left">Movie Dialog Dataset </td><td align="left">Chat, QA &amp; </td><td align="left">Movies </td><td align="center">&nbsp;3.3 </td><td align="center">&nbsp;3.1M<sup>\blacktriangledown</sup> </td><td align="center">&nbsp;185M </td><td align="left">For goal-driven dialogue systems. Includes </td></tr>
-<tr><td align="left">[<a href="#dodge2015evaluating" class="tth_citeref">Dodge et&nbsp;al., 2015</a>] </td><td align="left">Recommendation </td><td align="left"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="left">movie metadata as knowledge triples. </td></tr></table>
-
-
-<div style="text-align:center">Table 5: <span class="small">Human-human written dialogue datasets. Starred (*) quantities are computed using word counts based on spaces (i.e. a word must be a sequence of characters preceded and followed by a space), but for certain corpora, such as IRC and SMS corpora, proper English words are sometimes concatenated together due to slang usage. Triangle (<sup>\triangle</sup>) indicates lower and upper bounds computed using average words per utterance estimated on a similar Reddit corpus <a href="#schrading2015analyzing" id="CITEschrading2015analyzing" class="tth_citation">Schrading [2015]</a>. Square (<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup>) indicates estimates based only on English part of the corpus. Note that 2.1M dialogues from the Movie Dialog dataset (<sup>\blacktriangledown</sup>) are in the form of simulated QA pairs. Dialogs indicated by () are contiguous blocks of recorded conversation in a multi-participant chat. In the case of UseNet, we note the total number of newsgroups and find the average turns as average number of posts collected per newsgroup. () indicates an estimate based on a Twitter dataset of similar size and refers to tokens as well as words.</span></div>
-<a id="tab:hh_written">
-</a>
-</div></div>
-<div class="p"><!----></div>
-     <a id="tth_sEc4.2"></a><h3>
-4.2&nbsp;&nbsp;Human-Human Spoken Corpora</h3>
-
-<h3>Acknowledgements</h3>
-
-<div class="p"><!----></div>
-The authors gratefully acknowledge financial support by the Samsung Advanced Institute of Technology (SAIT), the Natural Sciences and Engineering Research Council of Canada (NSERC), the Canada Research Chairs, the Canadian Institute for Advanced Research (CIFAR) and Compute Canada. Early versions of the manuscript benefited greatly from the proofreading of Melanie Lyman-Abramovitch, and later versions were extensively revised by Genevieve Fried and Nicolas Angelard-Gontier. The authors also thank Nissan Pow, Michael Noseworthy, Chia-Wei Liu, Gabriel Forgues, Alessandro Sordoni, Yoshua Bengio and Aaron Courville for helpful discussions.
-
-<div class="p"><!----></div>
-<span class="footnotesize">
-<div class="p"><!----></div>
-<h2>References</h2>
-
-<dl>
- <dt><a href="#CITEaarts2006diachronic" id="aarts2006diachronic">[12006Aarts and Wallis]</a></dt><dd>
-B.&nbsp;Aarts and S.&nbsp;A. Wallis.
- The diachronic corpus of present-day spoken english (DCPSE), 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEabbott2016internet" id="abbott2016internet">[22016Abbott et&nbsp;al.Abbott, Ecker, Anand, and Walker]</a></dt><dd>
-Robert Abbott, Brian Ecker, Pranav Anand, and Marilyn Walker.
- Internet argument corpus 2.0: An sql schema for dialogic social media
-  and the corpora to go with it.
- In <em>Language Resources and Evaluation Conference, LREC2016</em>,
-  2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEafantenos2012developing" id="afantenos2012developing">[32012Afantenos et&nbsp;al.Afantenos, Asher, Benamara, Cadilhac, D&#233;gremont, Denis, Guhe, Keizer, Lascarides, Lemon, et&nbsp;al.]</a></dt><dd>
-S.&nbsp;Afantenos, N.&nbsp;Asher, F.&nbsp;Benamara, A.&nbsp;Cadilhac, C&#233;dric D&#233;gremont,
-  P.&nbsp;Denis, M.&nbsp;Guhe, S.&nbsp;Keizer, A.&nbsp;Lascarides, O.&nbsp;Lemon, et&nbsp;al.
- Developing a corpus of strategic conversation in the settlers of
-  catan.
- In <em>SeineDial 2012-The 16th workshop on the semantics and
-  pragmatics of dialogue</em>, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEal2000translating" id="al2000translating">[42000Al-Onaizan et&nbsp;al.Al-Onaizan, Germann, Hermjakob, Knight, Koehn, M., and Yamada]</a></dt><dd>
-Y.&nbsp;Al-Onaizan, U.&nbsp;Germann, U.&nbsp;Hermjakob, K.&nbsp;Knight, P.&nbsp;Koehn, D.&nbsp;M., and
-  K.&nbsp;Yamada.
- Translating with scarce resources.
- In <em>AAAI</em>, 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEameixa2013subtitles" id="ameixa2013subtitles">[52013Ameixa and Coheur]</a></dt><dd>
-D.&nbsp;Ameixa and L.&nbsp;Coheur.
- From subtitles to human interactions: introducing the subtle corpus.
- Technical report, Tech. rep., 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEanderson1991hcrc" id="anderson1991hcrc">[61991Anderson et&nbsp;al.Anderson, Bader, Bard, Boyle, Doherty, Garrod, Isard, Kowtko, McAllister, Miller, et&nbsp;al.]</a></dt><dd>
-A.&nbsp;H. Anderson, M.&nbsp;Bader, E.&nbsp;G. Bard, E.&nbsp;Boyle, G.&nbsp;Doherty, S.&nbsp;Garrod,
-  S.&nbsp;Isard, J.&nbsp;Kowtko, J.&nbsp;McAllister, J.&nbsp;Miller, et&nbsp;al.
- The HCRC map task corpus.
- <em>Language and speech</em>, 34 (4): 351-366, 1991.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEandreas2012annotating" id="andreas2012annotating">[72012Andreas et&nbsp;al.Andreas, Rosenthal, and McKeown]</a></dt><dd>
-Jacob Andreas, Sara Rosenthal, and Kathleen McKeown.
- Annotating agreement and disagreement in threaded discussion.
- In <em>LREC</em>, pages 818-822. Citeseer, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEasri2016sequence" id="asri2016sequence">[82016Asri et&nbsp;al.Asri, He, and Suleman]</a></dt><dd>
-L.&nbsp;E. Asri, J.&nbsp;He, and K.&nbsp;Suleman.
- A sequence-to-sequence model for user simulation in spoken dialogue
-  systems.
- <em>arXiv preprint arXiv:1607.00070</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEaubrey2013cardiff" id="aubrey2013cardiff">[92013Aubrey et&nbsp;al.Aubrey, Marshall, Rosin, Vandeventer, Cunningham, and Wallraven]</a></dt><dd>
-A.&nbsp;J. Aubrey, D.&nbsp;Marshall, P.&nbsp;L. Rosin, J.&nbsp;Vandeventer, D.&nbsp;W. Cunningham, and
-  C.&nbsp;Wallraven.
- Cardiff conversation database (CCDb): A database of natural dyadic
-  conversations.
- In <em>Computer Vision and Pattern Recognition Workshops (CVPRW),
-  IEEE Conference on</em>, pages 277-282, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEaust1995philips" id="aust1995philips">[101995Aust et&nbsp;al.Aust, Oerder, Seide, and Steinbiss]</a></dt><dd>
-H.&nbsp;Aust, M.&nbsp;Oerder, F.&nbsp;Seide, and V.&nbsp;Steinbiss.
- The philips automatic train timetable information system.
- <em>Speech Communication</em>, 17 (3): 249-262,
-  1995.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbanchs2012movie" id="banchs2012movie">[112012Banchs]</a></dt><dd>
-R.&nbsp;E. Banchs.
- Movie-DiC: a movie dialogue corpus for research and development.
- In <em>Proceedings of the 50th Annual Meeting of the Association
-  for Computational Linguistics: Short Papers</em>, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbanchs2012iris" id="banchs2012iris">[122012Banchs and Li]</a></dt><dd>
-R.&nbsp;E. Banchs and H.&nbsp;Li.
- IRIS: a chat-oriented dialogue system based on the vector space
-  model.
- In <em>Proceedings of the ACL 2012 System Demonstrations</em>, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbanerjee2005meteor" id="banerjee2005meteor">[132005Banerjee and Lavie]</a></dt><dd>
-S.&nbsp;Banerjee and A.&nbsp;Lavie.
- METEOR: An automatic metric for mt evaluation with improved
-  correlation with human judgments.
- In <em>Proceedings of the ACL workshop on intrinsic and extrinsic
-  evaluation measures for machine translation and/or summarization</em>, 2005.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbarlow2000corpus" id="barlow2000corpus">[142000Barlow]</a></dt><dd>
-M.&nbsp;Barlow.
- Corpus of spoken, professional american-english, 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbeare1999spoken" id="beare1999spoken">[151999Beare and Scott]</a></dt><dd>
-J.&nbsp;Beare and B.&nbsp;Scott.
- The spoken corpus of the survey of english dialects: language
-  variation and oral history.
- In <em>Proceedings of ALLC/ACH</em>, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbengio2003neural" id="bengio2003neural">[162003Bengio et&nbsp;al.Bengio, Ducharme, Vincent, and Janvin]</a></dt><dd>
-Y.&nbsp;Bengio, R.&nbsp;Ducharme, P.&nbsp;Vincent, and C.&nbsp;Janvin.
- A neural probabilistic language model.
- <em>The Journal of Machine Learning Research</em>, 3:
-  1137-1155, 2003.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbengio2014deep" id="bengio2014deep">[172014Bengio et&nbsp;al.Bengio, Goodfellow, and Courville]</a></dt><dd>
-Y.&nbsp;Bengio, I.&nbsp;Goodfellow, and A.&nbsp;Courville.
- Deep learning.
- <em>An MIT Press book in preparation. Draft chapters available at
-  http://www. iro. umontreal. ca/&nbsp; bengioy/dlbook</em>, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbennett2002carnegie" id="bennett2002carnegie">[182002Bennett and Rudnicky]</a></dt><dd>
-C.&nbsp;Bennett and A.&nbsp;I Rudnicky.
- The carnegie mellon communicator corpus, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbiber1986initial" id="biber1986initial">[191986Biber and Finegan]</a></dt><dd>
-D.&nbsp;Biber and E.&nbsp;Finegan.
- An initial typology of english text types.
- <em>Corpus linguistics II: New studies in the analysis and
-  exploitation of computer corpora</em>, pages 19-46, 1986.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbiber2001diachronic" id="biber2001diachronic">[202001Biber and Finegan]</a></dt><dd>
-D.&nbsp;Biber and E.&nbsp;Finegan.
- Diachronic relations among speech-based and written registers in
-  english.
- <em>Variation in English: multi-dimensional studies</em>, pages 66-83,
-  2001.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbohus2008sorry" id="bohus2008sorry">[212008Bohus and Rudnicky]</a></dt><dd>
-D.&nbsp;Bohus and A.&nbsp;I Rudnicky.
- Sorry, I didn’t catch that!
- In <em>Recent Trends in Discourse and Dialogue</em>, pages 123-154.
-  Springer, 2008.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbrennan2013entrainment" id="brennan2013entrainment">[222013Brennan et&nbsp;al.Brennan, Schuhmann, and Batres]</a></dt><dd>
-S.&nbsp;E. Brennan, K.&nbsp;S. Schuhmann, and K.&nbsp;M. Batres.
- Entrainment on the move and in the lab: The walking around corpus.
- In <em>Proceedings of the 35th Annual Conference of the Cognitive
-  Science Society</em>, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEbrown1984teaching" id="brown1984teaching">[231984Brown et&nbsp;al.Brown, Anderson, Shillcock, and Yule]</a></dt><dd>
-G.&nbsp;Brown, A.&nbsp;Anderson, R.&nbsp;Shillcock, and G.&nbsp;Yule.
- Teaching talk.
- <em>Cambridge: CUP</em>, 1984.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEweilhammer2002multi" id="weilhammer2002multi">[242000Burger et&nbsp;al.Burger, Weilhammer, Schiel, and Tillmann]</a></dt><dd>
-Susanne Burger, Karl Weilhammer, Florian Schiel, and Hans&nbsp;G Tillmann.
- Verbmobil data collection and annotation.
- In <em>Verbmobil: Foundations of speech-to-speech translation</em>,
-  pages 537-549. Springer, 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcahn1999psychological" id="cahn1999psychological">[251999Cahn and Brennan]</a></dt><dd>
-J.&nbsp;E. Cahn and S.&nbsp;E. Brennan.
- A psychological model of grounding and repair in dialog.
- In <em>AAAI Symposium on Psychological Models of Communication in
-  Collaborative Systems</em>, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcanavan1996callfriend" id="canavan1996callfriend">[261996Canavan and Zipperlen]</a></dt><dd>
-A.&nbsp;Canavan and G.&nbsp;Zipperlen.
- Callfriend american english-non-southern dialect.
- <em>Linguistic Data Consortium</em>, 10: 1, 1996.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcanavan1997callhome" id="canavan1997callhome">[271997Canavan et&nbsp;al.Canavan, Graff, and Zipperlen]</a></dt><dd>
-A.&nbsp;Canavan, D.&nbsp;Graff, and G.&nbsp;Zipperlen.
- Callhome american english speech.
- <em>Linguistic Data Consortium</em>, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITECard:1983:PHI:578027" id="Card:1983:PHI:578027">[281983Card et&nbsp;al.Card, Moran, and Newell]</a></dt><dd>
-S.&nbsp;K. Card, T.&nbsp;P. Moran, and A.&nbsp;Newell.
- <em>The Psychology of Human-Computer Interaction</em>.
- L. Erlbaum Associates Inc., Hillsdale, NJ, USA, 1983.
- ISBN 0898592437.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcarter1998orders" id="carter1998orders">[291998Carter]</a></dt><dd>
-R.&nbsp;Carter.
- Orders of reality: Cancode, communication, and culture.
- <em>ELT journal</em>, 52 (1): 43-56, 1998.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcarter2006cambridge" id="carter2006cambridge">[302006Carter and McCarthy]</a></dt><dd>
-R.&nbsp;Carter and M.&nbsp;McCarthy.
- <em>Cambridge grammar of English: a comprehensive guide; spoken and
-  written English grammar and usage</em>.
- Ernst Klett Sprachen, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEchartrand1999chameleon" id="chartrand1999chameleon">[311999Chartrand and Bargh]</a></dt><dd>
-Tanya&nbsp;L. Chartrand and J.&nbsp;A. Bargh.
- The chameleon effect: the perception-behavior link and social
-  interaction.
- <em>Journal of personality and social psychology</em>, 76
-  (6): 893, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEchen2013creating" id="chen2013creating">[322013Chen and Kan]</a></dt><dd>
-T.&nbsp;Chen and M.&nbsp;Kan.
- Creating a live, public short message service corpus: the nus sms
-  corpus.
- <em>Language Resources and Evaluation</em>, 47 (2):
-  299-335, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEchen2016zero" id="chen2016zero">[332016Chen et&nbsp;al.Chen, Hakkani-T&#252;r, and He]</a></dt><dd>
-Y.-N. Chen, D.&nbsp;Hakkani-T&#252;r, and X.&nbsp;He.
- Zero-shot learning of intent embeddings for expansion by
-  convolutional deep structured semantic models.
- In <em>Acoustics, Speech and Signal Processing (ICASSP), 2016 IEEE
-  International Conference on</em>, pages 6045-6049. IEEE, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEclark1991grounding" id="clark1991grounding">[341991Clark and Brennan]</a></dt><dd>
-H.&nbsp;H. Clark and S.&nbsp;E. Brennan.
- Grounding in communication.
- <em>Perspectives on socially shared cognition</em>, 13:
-  127-149, 1991.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcohen2005if" id="cohen2005if">[352005Cohen]</a></dt><dd>
-P.&nbsp;R. Cohen.
- If not turing's test, then what?
- <em>AI magazine</em>, 26 (4): 61, 2005.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEBBS:2533884" id="BBS:2533884">[361981Colby]</a></dt><dd>
-K.&nbsp;M. Colby.
- Modeling a paranoid mind.
- <em>Behavioral and Brain Sciences</em>, 4: 515-534, 1981.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcooper1974control" id="cooper1974control">[371974Cooper]</a></dt><dd>
-R.&nbsp;M. Cooper.
- The control of eye fixation by the meaning of spoken language: A new
-  methodology for the real-time investigation of speech perception, memory, and
-  language processing.
- <em>Cognitive Psychology</em>, 6 (1): 84-107, 1974.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITECristianini1999" id="Cristianini1999">[382000Cristianini and Shawe-Taylor]</a></dt><dd>
-N.&nbsp;Cristianini and J.&nbsp;Shawe-Taylor.
- <em>An Introduction to Support Vector Machines: And Other
-  Kernel-based Learning Methods</em>.
- Cambridge University Press, 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEcuayahuitl2015strategic" id="cuayahuitl2015strategic">[392015Cuay&#225;huitl et&nbsp;al.Cuay&#225;huitl, Keizer, and Lemon]</a></dt><dd>
-H.&nbsp;Cuay&#225;huitl, S.&nbsp;Keizer, and O.&nbsp;Lemon.
- Strategic dialogue management via deep reinforcement learning.
- <em>arXiv preprint arXiv:1511.08099</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEDanescu-Niculescu-Mizil+Lee:11a" id="Danescu-Niculescu-Mizil+Lee:11a">[402011Danescu-Niculescu-Mizil and Lee]</a></dt><dd>
-C.&nbsp;Danescu-Niculescu-Mizil and L.&nbsp;Lee.
- Chameleons in imagined conversations: A new approach to understanding
-  coordination of linguistic style in dialogs.
- In <em>Proceedings of the Workshop on Cognitive Modeling and
-  Computational Linguistics, ACL</em>, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdaubigney2012comprehensive" id="daubigney2012comprehensive">[412012Daubigney et&nbsp;al.Daubigney, Geist, Chandramohan, and Pietquin]</a></dt><dd>
-L.&nbsp;Daubigney, M.&nbsp;Geist, S.&nbsp;Chandramohan, and O.&nbsp;Pietquin.
- A comprehensive reinforcement learning framework for dialogue
-  management optimization.
- <em>IEEE Journal of Selected Topics in Signal Processing</em>,
-  6 (8): 891-902, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdavies2012comparing" id="davies2012comparing">[422012aDavies]</a></dt><dd>
-M.&nbsp;Davies.
- Comparing the corpus of american soap operas, COCA, and the BNC,
-  2012a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdavies2012corpus" id="davies2012corpus">[432012bDavies]</a></dt><dd>
-M.&nbsp;Davies.
- Corpus of american soap operas, 2012b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEde2013speaker" id="de2013speaker">[442013de&nbsp;Kok et&nbsp;al.de&nbsp;Kok, Heylen, and Morency]</a></dt><dd>
-I.&nbsp;de&nbsp;Kok, D.&nbsp;Heylen, and L.&nbsp;Morency.
- Speaker-adaptive multimodal prediction model for listener responses.
- In <em>Proceedings of the 15th ACM on International conference on
-  multimodal interaction</em>, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdeng2013machine" id="deng2013machine">[452013Deng and Li]</a></dt><dd>
-L.&nbsp;Deng and X.&nbsp;Li.
- Machine learning paradigms for speech recognition: An overview.
- <em>Audio, Speech, and Language Processing, IEEE Transactions on</em>,
-  21 (5): 1060-1089, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdenoyer2007wikipedia" id="denoyer2007wikipedia">[462007Denoyer and Gallinari]</a></dt><dd>
-L.&nbsp;Denoyer and P.&nbsp;Gallinari.
- The wikipedia xml corpus.
- In <em>Comparative Evaluation of XML Information Retrieval
-  Systems</em>, pages 12-19. Springer, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdhingra2016tweet2vec" id="dhingra2016tweet2vec">[472016Dhingra et&nbsp;al.Dhingra, Zhou, Fitzpatrick, Muehl, and Cohen]</a></dt><dd>
-B.&nbsp;Dhingra, Z.&nbsp;Zhou, D.&nbsp;Fitzpatrick, M.&nbsp;Muehl, and W.&nbsp;Cohen.
- Tweet2vec: Character-based distributed representations for social
-  media.
- <em>arXiv preprint arXiv:1605.03481</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdjalali2012corpus" id="djalali2012corpus">[482012Djalali et&nbsp;al.Djalali, Lauer, and Potts]</a></dt><dd>
-A.&nbsp;Djalali, S.&nbsp;Lauer, and C.&nbsp;Potts.
- Corpus evidence for preference-driven interpretation.
- In <em>Logic, Language and Meaning</em>, pages 150-159. Springer,
-  2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdodge2015evaluating" id="dodge2015evaluating">[492015Dodge et&nbsp;al.Dodge, Gane, Zhang, Bordes, Chopra, Miller, Szlam, and Weston]</a></dt><dd>
-J.&nbsp;Dodge, A.&nbsp;Gane, X.&nbsp;Zhang, A.&nbsp;Bordes, S.&nbsp;Chopra, A.&nbsp;Miller, A.&nbsp;Szlam, and
-  J.&nbsp;Weston.
- Evaluating prerequisite qualities for learning end-to-end dialog
-  systems.
- <em>arXiv preprint arXiv:1511.06931</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdose2013flipping" id="dose2013flipping">[502013Dose]</a></dt><dd>
-S.&nbsp;Dose.
- Flipping the script: A corpus of american television series (cats)
-  for corpus-based language learning and teaching.
- <em>Corpus Linguistics and Variation in English: Focus on
-  Non-native Englishes</em>, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEdouglas2007humaine" id="douglas2007humaine">[512007Douglas-Cowie et&nbsp;al.Douglas-Cowie, Cowie, Sneddon, Cox, Lowry, Mcrorie, Martin, Devillers, Abrilian, Batliner, et&nbsp;al.]</a></dt><dd>
-E.&nbsp;Douglas-Cowie, R.&nbsp;Cowie, I.&nbsp;Sneddon, C.&nbsp;Cox, O.&nbsp;Lowry, M.&nbsp;Mcrorie,
-  J.&nbsp;Martin, L.&nbsp;Devillers, S.&nbsp;Abrilian, A.&nbsp;Batliner, et&nbsp;al.
- The humaine database: addressing the collection and annotation of
-  naturalistic and induced emotional data.
- In <em>Affective computing and intelligent interaction</em>, pages
-  488-500. Springer, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEeckert1997user" id="eckert1997user">[521997Eckert et&nbsp;al.Eckert, Levin, and Pieraccini]</a></dt><dd>
-W.&nbsp;Eckert, E.&nbsp;Levin, and R.&nbsp;Pieraccini.
- User modeling for spoken dialogue system evaluation.
- In <em>Automatic Speech Recognition and Understanding, 1997.
-  Proceedings., 1997 IEEE Workshop on</em>, pages 80-87, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEelframes" id="elframes">[532017El&nbsp;Asri et&nbsp;al.El&nbsp;Asri, Schulz, Sharma, Zumer, Harris, Fine, Mehrotra, and Suleman]</a></dt><dd>
-L.&nbsp;El&nbsp;Asri, H.&nbsp;Schulz, S.&nbsp;Sharma, J.&nbsp;Zumer, J.&nbsp;Harris, E.&nbsp;Fine, R.&nbsp;Mehrotra,
-  and K.&nbsp;Suleman.
- Frames: Acorpus for adding memory to goal-oriented dialogue systems.
- preprint on webpage at <tt>http://www.maluuba.com/publications/</tt>,
-  2017.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEelsner2008you" id="elsner2008you">[542008Elsner and Charniak]</a></dt><dd>
-M.&nbsp;Elsner and E.&nbsp;Charniak.
- You talking to me? a corpus and algorithm for conversation
-  disentanglement.
- In <em>Association for Computational Linguistics (ACL)</em>, 2008.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEerhan2010jmlr" id="erhan2010jmlr">[552010Erhan et&nbsp;al.Erhan, Bengio, Courville, Manzagol, and Vincent]</a></dt><dd>
-D.&nbsp;Erhan, Y.&nbsp;Bengio, A.&nbsp;Courville, Pierre-A. Manzagol, and P.&nbsp;Vincent.
- Why does unsupervised pre-training help deep learning?
- <em>Journal of Machine Learning Research</em>, 11, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEfabbrizio_bootstrappingspoken" id="fabbrizio_bootstrappingspoken">[562004Fabbrizio et&nbsp;al.Fabbrizio, Tur, and Hakkani-Tür]</a></dt><dd>
-G.&nbsp;Di Fabbrizio, G.&nbsp;Tur, and D.&nbsp;Hakkani-Tür.
- Bootstrapping spoken dialog systems with data reuse.
- In <em>SIGDIAL</em>, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEfatemi2016policy" id="fatemi2016policy">[572016Fatemi et&nbsp;al.Fatemi, Asri, Schulz, He, and Suleman]</a></dt><dd>
-M.&nbsp;Fatemi, L.&nbsp;E. Asri, H.&nbsp;Schulz, J.&nbsp;He, and K.&nbsp;Suleman.
- Policy networks with two-stage training for dialogue systems.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEfisher2006you" id="fisher2006you">[582006Fisher et&nbsp;al.Fisher, Smith, and Welser]</a></dt><dd>
-D.&nbsp;Fisher, M.&nbsp;Smith, and H.&nbsp;T Welser.
- You are who you talk to: Detecting roles in usenet newsgroups.
- In <em>Proceedings of the 39th Annual Hawaii International
-  Conference on System Sciences (HICSS'06)</em>, volume&nbsp;3, pages 59b-59b, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEforchini2009spontaneity" id="forchini2009spontaneity">[592009Forchini]</a></dt><dd>
-P.&nbsp;Forchini.
- Spontaneity reloaded: American face-to-face and movie conversation
-  compared.
- In <em>Corpus Linguistics</em>, 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEforchini2012movie" id="forchini2012movie">[602012Forchini]</a></dt><dd>
-P.&nbsp;Forchini.
- <em>Movie language revisited. Evidence from multi-dimensional
-  analysis and corpora</em>.
- Peter Lang, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEforguesbootstrapping" id="forguesbootstrapping">[612014Forgues et&nbsp;al.Forgues, Pineau, Larchev&#234;que, and Tremblay]</a></dt><dd>
-G.&nbsp;Forgues, J.&nbsp;Pineau, J.&nbsp;Larchev&#234;que, and R.&nbsp;Tremblay.
- Bootstrapping dialog systems with word embeddings.
- In <em>Workshop on Modern Machine Learning and Natural Language
-  Processing, Advances in neural information processing systems (NIPS)</em>, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEforsyth2007lexical" id="forsyth2007lexical">[622007Forsyth and Martell]</a></dt><dd>
-E.&nbsp;N. Forsyth and C.&nbsp;H. Martell.
- Lexical and discourse analysis of online chat dialog.
- In <em>International Conference on Semantic Computing (ICSC).</em>,
-  pages 19-26, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEGalleyBSJAQMGD15" id="GalleyBSJAQMGD15">[632015Galley et&nbsp;al.Galley, Brockett, Sordoni, Ji, Auli, Quirk, Mitchell, Gao, and Dolan]</a></dt><dd>
-M.&nbsp;Galley, C.&nbsp;Brockett, A.&nbsp;Sordoni, Y.&nbsp;Ji, M.&nbsp;Auli, C.&nbsp;Quirk, M.&nbsp;Mitchell,
-  J.&nbsp;Gao, and B.&nbsp;Dolan.
- deltaBLEU: A discriminative metric for generation tasks with
-  intrinsically diverse targets.
- In <em>Proceedings of the 53rd Annual Meeting of the Association
-  for Computational Linguistics and the 7th International Joint Conference on
-  Natural Language Processing of the Asian Federation of Natural Language
-  Processing, ACL</em>, pages 445-450, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgavsic2010gaussian" id="gavsic2010gaussian">[642010Gasi\'c et&nbsp;al.Gasi\'c, Jurc&#237;cek, Keizer, Mairesse, Thomson, Yu, and Young]</a></dt><dd>
-M.&nbsp;Gasi\'c, F.&nbsp;Jurc&#237;cek, S.&nbsp;Keizer, F.&nbsp;Mairesse,
-  B.&nbsp;Thomson, K.&nbsp;Yu, and S.&nbsp;Young.
- Gaussian processes for fast policy optimisation of pomdp-based
-  dialogue managers.
- In <em>Proceedings of the 11th Annual Meeting of the Special
-  Interest Group on Discourse and Dialogue</em>, pages 201-204. Association for
-  Computational Linguistics, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgavsic2011line" id="gavsic2011line">[652011Gasi\'c et&nbsp;al.Gasi\'c, Jurc&#237;cek, Thomson, Yu, and Young]</a></dt><dd>
-M.&nbsp;Gasi\'c, F.&nbsp;Jurc&#237;cek, B.&nbsp;Thomson, K.&nbsp;Yu, and
-  S.&nbsp;Young.
- On-line policy optimisation of spoken dialogue systems via live
-  interaction with human subjects.
- In <em>IEEE Workshop on Automatic Speech Recognition and
-  Understanding (ASRU)</em>, pages 312-317. IEEE, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgavsic2012policy" id="gavsic2012policy">[662012Gasi\'c et&nbsp;al.Gasi\'c, Henderson, Thomson, Tsiakoulis, and Young]</a></dt><dd>
-M.&nbsp;Gasi\'c, M.&nbsp;Henderson, B.&nbsp;Thomson, P.&nbsp;Tsiakoulis, and S.&nbsp;Young.
- Policy optimisation of pomdp-based dialogue systems without state
-  space compression.
- In <em>Spoken Language Technology Workshop (SLT), 2012 IEEE</em>, pages
-  31-36. IEEE, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgasic2013line" id="gasic2013line">[672013Gasic et&nbsp;al.Gasic, Breslin, Henderson, Kim, Szummer, Thomson, Tsiakoulis, and Young]</a></dt><dd>
-M.&nbsp;Gasic, C.&nbsp;Breslin, M.&nbsp;Henderson, D.&nbsp;Kim, M.&nbsp;Szummer, B.&nbsp;Thomson,
-  P.&nbsp;Tsiakoulis, and S.&nbsp;Young.
- On-line policy optimisation of Bayesian spoken dialogue systems via
-  human interaction.
- In <em>IEEE International Conference on Acoustics, Speech and
-  Signal Processing</em>, pages 8367-8371, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgavsic2016dialogue" id="gavsic2016dialogue">[682016Gasi\'c et&nbsp;al.Gasi\'c, Mrksi\'c, Rojas-Barahona, Su, Ultes, Vandyke, Wen, and Young]</a></dt><dd>
-M.&nbsp;Gasi\'c, N.&nbsp;Mrksi\'c, L.&nbsp;M. Rojas-Barahona, P.-H. Su,
-  S.&nbsp;Ultes, D.&nbsp;Vandyke, T.-H. Wen, and S.&nbsp;Young.
- Dialogue manager domain adaptation using gaussian process
-  reinforcement learning.
- <em>Computer Speech &amp; Language</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgenevay2016transfer" id="genevay2016transfer">[692016Genevay and Laroche]</a></dt><dd>
-A.&nbsp;Genevay and R.&nbsp;Laroche.
- Transfer learning for user adaptation in spoken dialogue systems.
- In <em>Proceedings of the 2016 International Conference on
-  Autonomous Agents &amp; Multiagent Systems</em>, pages 975-983. International
-  Foundation for Autonomous Agents and Multiagent Systems, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgeorgila2006user" id="georgila2006user">[702006Georgila et&nbsp;al.Georgila, Henderson, and Lemon]</a></dt><dd>
-K.&nbsp;Georgila, J.&nbsp;Henderson, and O.&nbsp;Lemon.
- User simulation for spoken dialogue systems: learning and evaluation.
- In <em>Proceedings of INTERSPEECH</em>, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgeorgila2010match" id="georgila2010match">[712010Georgila et&nbsp;al.Georgila, Wolters, Moore, and Logie]</a></dt><dd>
-K.&nbsp;Georgila, M.&nbsp;Wolters, J.&nbsp;D. Moore, and R.&nbsp;H. Logie.
- The MATCH corpus: A corpus of older and younger users’
-  interactions with spoken dialogue systems.
- <em>Language Resources and Evaluation</em>, 44 (3):
-  221-261, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgibson1963perception" id="gibson1963perception">[721963Gibson and Pick]</a></dt><dd>
-J.&nbsp;Gibson and A.&nbsp;D. Pick.
- Perception of another person's looking behavior.
- <em>The American journal of psychology</em>, 76 (3):
-  386-394, 1963.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgodfrey1992switchboard" id="godfrey1992switchboard">[731992Godfrey et&nbsp;al.Godfrey, Holliman, and McDaniel]</a></dt><dd>
-J.&nbsp;J Godfrey, E.&nbsp;C Holliman, and J&nbsp;McDaniel.
- SWITCHBOARD: Telephone speech corpus for research and development.
- In <em>International Conference on Acoustics, Speech, and Signal
-  Processing (ICASSP-92)</em>, 1992.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEGoodfellow-et-al-2015-Book" id="Goodfellow-et-al-2015-Book">[742015Goodfellow et&nbsp;al.Goodfellow, Courville, and Bengio]</a></dt><dd>
-I.&nbsp;Goodfellow, A.&nbsp;Courville, and Y.&nbsp;Bengio.
- Deep learning.
- Book in preparation for MIT Press, 2015.
- URL <tt>http://goodfeli.github.io/dlbook/</tt>.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEGoodwin:1981:Conversational" id="Goodwin:1981:Conversational">[751981Goodwin]</a></dt><dd>
-C.&nbsp;Goodwin.
- <em>Conversational Organization: Interaction Between Speakers and
-  Hearers</em>.
- New York: Academic Press, 1981.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgorin1997may" id="gorin1997may">[761997Gorin et&nbsp;al.Gorin, Riccardi, and Wright]</a></dt><dd>
-A.&nbsp;L. Gorin, G.&nbsp;Riccardi, and J.&nbsp;H. Wright.
- How may I help you?
- <em>Speech Communication</em>, 23 (1): 113-127,
-  1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgraves2012seq" id="graves2012seq">[772012Graves]</a></dt><dd>
-A.&nbsp;Graves.
- Sequence transduction with recurrent neural networks.
- In <em>Proceedings of the 29th International Conference on Machine
-  Learning (ICML), Representation Learning Workshop</em>, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgraves14" id="graves14">[782014Graves et&nbsp;al.Graves, Wayne, and Danihelka]</a></dt><dd>
-A.&nbsp;Graves, G.&nbsp;Wayne, and I.&nbsp;Danihelka.
- Neural turing machines.
- <em>arXiv preprint arXiv:1410.5401</em>, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgreenbaum1996comparing" id="greenbaum1996comparing">[791996Greenbaum]</a></dt><dd>
-S.&nbsp;Greenbaum.
- <em>Comparing English worldwide: The international corpus of
-  English</em>.
- Clarendon Press, 1996.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgreenbaum1996international" id="greenbaum1996international">[801996Greenbaum and Nelson]</a></dt><dd>
-S.&nbsp;Greenbaum and G&nbsp;Nelson.
- The international corpus of english (ICE) project.
- <em>World Englishes</em>, 15 (1): 3-15, 1996.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEDBLP:journals/corr/GulcehreFXCBLBS15" id="DBLP:journals/corr/GulcehreFXCBLBS15">[812015G&#252;l&#231;ehre et&nbsp;al.G&#252;l&#231;ehre, Firat, Xu, Cho, Barrault, Lin, Bougares, Schwenk, and Bengio]</a></dt><dd>
-C.&nbsp;G&#252;l&#231;ehre, O.&nbsp;Firat, K.&nbsp;Xu, K.&nbsp;Cho, L.&nbsp;Barrault, H.&nbsp;Lin,
-  F.&nbsp;Bougares, H.&nbsp;Schwenk, and Y.&nbsp;Bengio.
- On using monolingual corpora in neural machine translation.
- <em>CoRR</em>, abs/1503.03535, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEgurevych2004semantic" id="gurevych2004semantic">[822004Gurevych and Strube]</a></dt><dd>
-I.&nbsp;Gurevych and M.&nbsp;Strube.
- Semantic similarity applied to spoken dialogue summarization.
- In <em>Proceedings of the 20th international conference on
-  Computational Linguistics</em>, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhaslerud1995bergen" id="haslerud1995bergen">[831995Haslerud and Stenstr&#246;m]</a></dt><dd>
-V.&nbsp;Haslerud and A.&nbsp;Stenstr&#246;m.
- The bergen corpus of london teenager language (COLT).
- <em>Spoken English on Computer. Transcription, Mark-up and
-  Application. London: Longman</em>, pages 235-242, 1995.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEheeman1995trains" id="heeman1995trains">[841995Heeman and Allen]</a></dt><dd>
-Peter&nbsp;A Heeman and James&nbsp;F Allen.
- The trains 93 dialogues.
- Technical report, DTIC Document, 1995.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhemphill1990atis" id="hemphill1990atis">[851990Hemphill et&nbsp;al.Hemphill, Godfrey, and Doddington]</a></dt><dd>
-C.&nbsp;T. Hemphill, J.&nbsp;J. Godfrey, and G.&nbsp;R. Doddington.
- The atis spoken language systems pilot corpus.
- In <em>Proceedings of the DARPA speech and natural language
-  workshop</em>, pages 96-101, 1990.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhenderson2013deep" id="henderson2013deep">[862013Henderson et&nbsp;al.Henderson, Thomson, and Young]</a></dt><dd>
-M.&nbsp;Henderson, B.&nbsp;Thomson, and S.&nbsp;Young.
- Deep neural network approach for the dialog state tracking challenge.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhenderson2014dialog" id="henderson2014dialog">[872014aHenderson et&nbsp;al.Henderson, Thomson, and Williams]</a></dt><dd>
-M.&nbsp;Henderson, B.&nbsp;Thomson, and J.&nbsp;Williams.
- Dialog state tracking challenge 2 &amp; 3, 2014a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhenderson2014second" id="henderson2014second">[882014bHenderson et&nbsp;al.Henderson, Thomson, and Williams]</a></dt><dd>
-M.&nbsp;Henderson, B.&nbsp;Thomson, and J.&nbsp;Williams.
- The second dialog state tracking challenge.
- In <em>SIGDIAL</em>, 2014b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhenderson2014word" id="henderson2014word">[892014cHenderson et&nbsp;al.Henderson, Thomson, and Young]</a></dt><dd>
-M.&nbsp;Henderson, B.&nbsp;Thomson, and S.&nbsp;Young.
- Word-based dialog state tracking with recurrent neural networks.
- In <em>15th Special Interest Group on Discourse and Dialogue
-  (SIGDIAL)</em>, page 292, 2014c.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhinton2012deep" id="hinton2012deep">[902012Hinton et&nbsp;al.Hinton, Deng, Yu, Dahl, Mohamed, Jaitly, Senior, Vanhoucke, Nguyen, Sainath, et&nbsp;al.]</a></dt><dd>
-G.&nbsp;Hinton, L.&nbsp;Deng, D.&nbsp;Yu, G.&nbsp;E. Dahl, A.&nbsp;Mohamed, N.&nbsp;Jaitly, A.&nbsp;Senior,
-  V.&nbsp;Vanhoucke, P.&nbsp;Nguyen, T.a&nbsp;N. Sainath, et&nbsp;al.
- Deep neural networks for acoustic modeling in speech recognition: The
-  shared views of four research groups.
- <em>Signal Processing Magazine, IEEE</em>, 29 (6):
-  82-97, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhiraoka2016active" id="hiraoka2016active">[912016Hiraoka et&nbsp;al.Hiraoka, Neubig, Yoshino, Toda, and Nakamura]</a></dt><dd>
-T.&nbsp;Hiraoka, G.&nbsp;Neubig, K.&nbsp;Yoshino, T.&nbsp;Toda, and S.&nbsp;Nakamura.
- Active learning for example-based dialog systems.
- In <em>Proc Intl Workshop on Spoken Dialog Systems, Saariselka,
-  Finland</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEhung2010idiap" id="hung2010idiap">[922010Hung and Chittaranjan]</a></dt><dd>
-H.&nbsp;Hung and G.&nbsp;Chittaranjan.
- The IDIAP wolf corpus: exploring group behaviour in a competitive
-  role-playing game.
- In <em>Proceedings of the international conference on Multimedia</em>,
-  pages 879-882, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEHutchens:1998:IM:1603899.1603945" id="Hutchens:1998:IM:1603899.1603945">[931998Hutchens and Alder]</a></dt><dd>
-J.&nbsp;L. Hutchens and M.&nbsp;D. Alder.
- Introducing MegaHAL.
- In <em>Proceedings of the Joint Conferences on New Methods in
-  Language Processing and Computational Natural Language Learning</em>, 1998.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEjonsson1988talking" id="jonsson1988talking">[941988J. and D.]</a></dt><dd>
-Arne J. and Nils D.
- Talking to a computer is not like talking to your best friend.
- In <em>Proceedings of The first Scandinivian Conference on
-  Artificial Intelligence</em>, 1988.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEjung2009data" id="jung2009data">[952009Jung et&nbsp;al.Jung, Lee, Kim, Jeong, and Lee]</a></dt><dd>
-S.&nbsp;Jung, C.&nbsp;Lee, K.&nbsp;Kim, M.&nbsp;Jeong, and G.&nbsp;G. Lee.
- Data-driven user simulation for automated evaluation of spoken dialog
-  systems.
- <em>Computer Speech &amp; Language</em>, 23 (4):
-  479-509, 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEjurafsky2008speech" id="jurafsky2008speech">[962008Jurafsky and Martin]</a></dt><dd>
-D.&nbsp;Jurafsky and J.&nbsp;H. Martin.
- <em>Speech and language processing, 2nd Edition</em>.
- Prentice Hall, 2008.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEjurcicek2011real" id="jurcicek2011real">[972011Jurc cek et&nbsp;al.Jurc cek, Keizer, Gasic, Mairesse, Thomson, Yu, and Young]</a></dt><dd>
-F.&nbsp;Jurccek, S.&nbsp;Keizer, M.&nbsp;Gasic, F.&nbsp;Mairesse, B.&nbsp;Thomson, K.&nbsp;Yu, and
-  S.&nbsp;Young.
- Real user evaluation of spoken dialogue systems using amazon
-  mechanical turk.
- In <em>Proceedings of INTERSPEECH</em>, volume&nbsp;11, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkadlec2015improved" id="kadlec2015improved">[982015Kadlec et&nbsp;al.Kadlec, Schmid, and Kleindienst]</a></dt><dd>
-R.&nbsp;Kadlec, M.&nbsp;Schmid, and J.&nbsp;Kleindienst.
- Improved deep learning baselines for ubuntu corpus dialogs.
- <em>Neural Information Processing Systems Workshop on Machine
-  Learning for Spoken Language Understanding</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkim2015dialog" id="kim2015dialog">[992015Kim et&nbsp;al.Kim, D’Haro, Banchs, Williams, and Henderson]</a></dt><dd>
-S.&nbsp;Kim, L.&nbsp;F. D’Haro, R.&nbsp;E. Banchs, J.&nbsp;Williams, and M.&nbsp;Henderson.
- Dialog state tracking challenge 4, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkim2016fifth" id="kim2016fifth">[1002016Kim et&nbsp;al.Kim, D’Haro, Banchs, Williams, Henderson, and Yoshino]</a></dt><dd>
-S.&nbsp;Kim, L.&nbsp;F. D’Haro, R.&nbsp;E. Banchs, J.&nbsp;D. Williams, M.&nbsp;Henderson, and
-  K.&nbsp;Yoshino.
- The fifth dialog state tracking challenge.
- In <em>IEEE Spoken Language Technology Workshop (SLT)</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkonstan1997grouplens" id="konstan1997grouplens">[1011997Konstan et&nbsp;al.Konstan, Miller, Maltz, Herlocker, Gordon, and Riedl]</a></dt><dd>
-J.&nbsp;A Konstan, B.&nbsp;N. Miller, D.&nbsp;Maltz, J.&nbsp;L. Herlocker, L.&nbsp;R. Gordon, and
-  J.&nbsp;Riedl.
- Grouplens: applying collaborative filtering to usenet news.
- <em>Communications of the ACM</em>, 40 (3): 77-87,
-  1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkumar2015ask" id="kumar2015ask">[1022015Kumar et&nbsp;al.Kumar, Irsoy, Su, Bradbury, English, Pierce, Ondruska, Gulrajani, and Socher]</a></dt><dd>
-A.&nbsp;Kumar, O.&nbsp;Irsoy, J.&nbsp;Su, J.&nbsp;Bradbury, R.&nbsp;English, B.&nbsp;Pierce, P.&nbsp;Ondruska,
-  I.&nbsp;Gulrajani, and R.&nbsp;Socher.
- Ask me anything: Dynamic memory networks for natural language
-  processing.
- <em>Neural Information Processing Systems (NIPS)</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEkyto2006guide" id="kyto2006guide">[1032006Kyt&#246; and Walker]</a></dt><dd>
-Merja Kyt&#246; and Terry Walker.
- <em>Guide to A corpus of English dialogues 1560-1760</em>.
- Acta Universitatis Upsaliensis, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElangkilde1998generation" id="langkilde1998generation">[1041998Langkilde and Knight]</a></dt><dd>
-I.&nbsp;Langkilde and K.&nbsp;Knight.
- Generation that exploits corpus-based statistical knowledge.
- In <em>Proceedings of the 36th Annual Meeting of the Association
-  for Computational Linguistics and 17th International Conference on
-  Computational Linguistics-Volume 1</em>, pages 704-710. Association for
-  Computational Linguistics, 1998.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEleech1992100" id="leech1992100">[1051992Leech]</a></dt><dd>
-G.&nbsp;Leech.
- 100 million words of english: the british national corpus (BNC).
- <em>Language Research</em>, 28 (1): 1-13, 1992.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElevin1997stochastic" id="levin1997stochastic">[1061997Levin and Pieraccini]</a></dt><dd>
-E.&nbsp;Levin and R.&nbsp;Pieraccini.
- A stochastic model of computer-human interaction for learning
-  dialogue strategies.
- In <em>Eurospeech</em>, volume&nbsp;97, pages 1883-1886, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElevin1997learning" id="levin1997learning">[1071997Levin et&nbsp;al.Levin, Pieraccini, and Eckert]</a></dt><dd>
-E.&nbsp;Levin, R.&nbsp;Pieraccini, and W.&nbsp;Eckert.
- Learning dialogue strategies within the markov decision process
-  framework.
- In <em>Automatic Speech Recognition and Understanding, 1997.
-  Proceedings., 1997 IEEE Workshop on</em>, pages 72-79. IEEE, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEli2015diversity" id="li2015diversity">[1082015Li et&nbsp;al.Li, Galley, Brockett, Gao, and Dolan]</a></dt><dd>
-J.&nbsp;Li, M.&nbsp;Galley, C.&nbsp;Brockett, J.&nbsp;Gao, and B.&nbsp;Dolan.
- A diversity-promoting objective function for neural conversation
-  models.
- <em>arXiv preprint arXiv:1510.03055</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEli2016persona" id="li2016persona">[1092016Li et&nbsp;al.Li, Galley, Brockett, Gao, and D.]</a></dt><dd>
-J.&nbsp;Li, M.&nbsp;Galley, C.&nbsp;Brockett, J.&nbsp;Gao, and Bill D.
- A persona-based neural conversation model.
- In <em>ACL</em>, pages 994-1003, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElin2011" id="lin2011">[1102011aLin and Walker]</a></dt><dd>
-G.&nbsp;Lin and M.&nbsp;Walker.
- All the world's a stage: Learning character models from film.
- In <em>AAAI Conference on Artificial Intelligence and Interactive
-  Digital Entertainment</em>, 2011a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElin2011all" id="lin2011all">[1112011bLin and Walker]</a></dt><dd>
-G.&nbsp;I. Lin and M.&nbsp;A. Walker.
- All the world's a stage: Learning character models from film.
- In <em>AIIDE</em>, 2011b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElord1974perception" id="lord1974perception">[1121974Lord and Haith]</a></dt><dd>
-C.&nbsp;Lord and M.&nbsp;Haith.
- The perception of eye contact.
- <em>Attention, Perception, &amp; Psychophysics</em>, 16
-  (3): 413-416, 1974.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElowe2015ubuntu" id="lowe2015ubuntu">[1132015aLowe et&nbsp;al.Lowe, Pow, Serban, and Pineau]</a></dt><dd>
-R.&nbsp;Lowe, N.&nbsp;Pow, I.&nbsp;Serban, and J.&nbsp;Pineau.
- The ubuntu dialogue corpus: A large dataset for research in
-  unstructured multi-turn dialogue systems.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2015a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElowe2015incorporating" id="lowe2015incorporating">[1142015bLowe et&nbsp;al.Lowe, Pow, Serban, Charlin, and Pineau]</a></dt><dd>
-R.&nbsp;Lowe, N.&nbsp;Pow, I.&nbsp;V. Serban, L.&nbsp;Charlin, and J.&nbsp;Pineau.
- Incorporating unstructured textual knowledge sources into neural
-  dialogue systems.
- <em>Neural Information Processing Systems Workshop on Machine
-  Learning for Spoken Language Understanding</em>, 2015b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElowe2016evaluation" id="lowe2016evaluation">[1152016Lowe et&nbsp;al.Lowe, Serban, Noseworthy, Charlin, and Pineau]</a></dt><dd>
-R.&nbsp;Lowe, I.&nbsp;V. Serban, M.&nbsp;Noseworthy, L.&nbsp;Charlin, and J.&nbsp;Pineau.
- On the evaluation of dialogue systems with next utterance
-  classification.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITElucas2009" id="lucas2009">[1162009Lucas et&nbsp;al.Lucas, Fernández, Salazar, Ferreiros, and Segundo]</a></dt><dd>
-J.&nbsp;M. Lucas, F.&nbsp;Fernández, J.&nbsp;Salazar, J.&nbsp;Ferreiros, and R.&nbsp;San Segundo.
- Managing speaker identity and user profiles in a spoken dialogue
-  system.
- In <em>Procesamiento del Lenguaje Natural</em>, number&nbsp;43 in 1, pages
-  77-84, 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmacwhinney1985child" id="macwhinney1985child">[1171985MacWhinney and Snow]</a></dt><dd>
-B.&nbsp;MacWhinney and C.&nbsp;Snow.
- The child language data exchange system.
- <em>Journal of child language</em>, 12 (02):
-  271-295, 1985.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmairesse2014stochastic" id="mairesse2014stochastic">[1182014Mairesse and Young]</a></dt><dd>
-F.&nbsp;Mairesse and S.&nbsp;Young.
- Stochastic language generation in dialogue using factored language
-  models.
- <em>Computational Linguistics</em>, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmairesse2010phrase" id="mairesse2010phrase">[1192010Mairesse et&nbsp;al.Mairesse, Gasi\'c, Jurc&#237;cek, Keizer, Thomson, Yu, and Young]</a></dt><dd>
-F.&nbsp;Mairesse, M.&nbsp;Gasi\'c, F.&nbsp;Jurc&#237;cek, S.&nbsp;Keizer,
-  B.&nbsp;Thomson, K.&nbsp;Yu, and S.&nbsp;Young.
- Phrase-based statistical language generation using graphical models
-  and active learning.
- In <em>Proceedings of the 48th Annual Meeting of the Association
-  for Computational Linguistics</em>, pages 1552-1561. Association for
-  Computational Linguistics, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmanning1999foundations" id="manning1999foundations">[1201999Manning and Sch&#252;tze]</a></dt><dd>
-C.&nbsp;D. Manning and H.&nbsp;Sch&#252;tze.
- <em>Foundations of statistical natural language processing</em>.
- MIT press, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmccarthy1998spoken" id="mccarthy1998spoken">[1211998McCarthy]</a></dt><dd>
-M.&nbsp;McCarthy.
- <em>Spoken language and applied linguistics</em>.
- Ernst Klett Sprachen, 1998.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmcglashan1992dialogue" id="mcglashan1992dialogue">[1221992McGlashan et&nbsp;al.McGlashan, Fraser, Gilbert, Bilange, Heisterkamp, and Youd]</a></dt><dd>
-S.&nbsp;McGlashan, N.&nbsp;Fraser, N.&nbsp;Gilbert, E.&nbsp;Bilange, P.&nbsp;Heisterkamp, and N.&nbsp;Youd.
- Dialogue management for telephone information systems.
- In <em>Proceedings of the third conference on Applied natural
-  language processing</em>, pages 245-246. Association for Computational
-  Linguistics, 1992.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmckeown2010semaine" id="mckeown2010semaine">[1232010McKeown et&nbsp;al.McKeown, Valstar, Cowie, and Pantic]</a></dt><dd>
-G.&nbsp;McKeown, M.&nbsp;F Valstar, R.&nbsp;Cowie, and M.&nbsp;Pantic.
- The SEMAINE corpus of emotionally coloured character interactions.
- In <em>Multimedia and Expo (ICME), 2010 IEEE International
-  Conference on</em>, pages 1079-1084, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmikolov2010recurrent" id="mikolov2010recurrent">[1242010Mikolov et&nbsp;al.Mikolov, Karafi&#225;t, Burget, Cernock\`y, and Khudanpur]</a></dt><dd>
-T.&nbsp;Mikolov, M.&nbsp;Karafi&#225;t, L.&nbsp;Burget, J.&nbsp;Cernock\`y, and Sanjeev Khudanpur.
- Recurrent neural network based language model.
- In <em>11th Proceedings of INTERSPEECH</em>, pages 1045-1048, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmikolov2013distributed" id="mikolov2013distributed">[1252013Mikolov et&nbsp;al.Mikolov, Sutskever, Chen, Corrado, and Dean]</a></dt><dd>
-T.&nbsp;Mikolov, I.&nbsp;Sutskever, K.&nbsp;Chen, G.&nbsp;S. Corrado, and J.&nbsp;Dean.
- Distributed representations of words and phrases and their
-  compositionality.
- In <em>Advances in neural information processing systems</em>, pages
-  3111-3119, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmiller1995wordnet" id="miller1995wordnet">[1261995Miller]</a></dt><dd>
-G.&nbsp;A. Miller.
- WordNet: a lexical database for english.
- <em>Communications of the ACM</em>, 38 (11): 39-41,
-  1995.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmo2016personalizing" id="mo2016personalizing">[1272016Mo et&nbsp;al.Mo, Li, Zhang, Li, and Yang]</a></dt><dd>
-K.&nbsp;Mo, S.&nbsp;Li, Y.&nbsp;Zhang, J.&nbsp;Li, and Q.&nbsp;Yang.
- Personalizing a dialogue system with transfer learning.
- <em>arXiv preprint arXiv:1610.02891</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEmohan2014learning" id="mohan2014learning">[1282014Mohan and Laird]</a></dt><dd>
-S.&nbsp;Mohan and J.&nbsp;Laird.
- Learning goal-oriented hierarchical tasks from situated interactive
-  instruction.
- In <em>AAAI</em>, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEnguyen2016ms" id="nguyen2016ms">[1292016Nguyen et&nbsp;al.Nguyen, Rosenberg, Song, Gao, Tiwary, Majumder, and Deng]</a></dt><dd>
-Tri Nguyen, Mir Rosenberg, Xia Song, Jianfeng Gao, Saurabh Tiwary, Rangan
-  Majumder, and Li&nbsp;Deng.
- Ms marco: A human generated machine reading comprehension dataset.
- <em>arXiv preprint arXiv:1611.09268</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEnio2014conversation" id="nio2014conversation">[1302014Nio et&nbsp;al.Nio, Sakti, Neubig, Toda, and Nakamura]</a></dt><dd>
-L&nbsp;Nio, S.&nbsp;Sakti, G.&nbsp;Neubig, T.&nbsp;Toda, and S.&nbsp;Nakamura.
- Conversation dialog corpora from television and movie scripts.
- In <em>17th Oriental Chapter of the International Committee for the
-  Co-ordination and Standardization of Speech Databases and Assessment
-  Techniques (COCOSDA)</em>, pages 1-4, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEnoth2004experiences" id="noth2004experiences">[1312004N&#246;th et&nbsp;al.N&#246;th, Horndasch, Gallwitz, and Haas]</a></dt><dd>
-E.&nbsp;N&#246;th, A.&nbsp;Horndasch, F.&nbsp;Gallwitz, and J.&nbsp;Haas.
- Experiences with commercial telephone-based dialogue systems.
- <em>it-Information Technology (vormals it+ ti)</em>, 46
-  (6/2004): 315-321, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEoertel2013d64" id="oertel2013d64">[1322013Oertel et&nbsp;al.Oertel, Cummins, Edlund, Wagner, and Campbell]</a></dt><dd>
-C.&nbsp;Oertel, F.&nbsp;Cummins, J.&nbsp;Edlund, P.&nbsp;Wagner, and N.&nbsp;Campbell.
- D64: A corpus of richly recorded conversational interaction.
- <em>Journal on Multimodal User Interfaces</em>, 7
-  (1-2): 19-28, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEoh2000stochastic" id="oh2000stochastic">[1332000Oh and Rudnicky]</a></dt><dd>
-A.&nbsp;H. Oh and A.&nbsp;I. Rudnicky.
- Stochastic language generation for spoken dialogue systems.
- In <em>Proceedings of the 2000 ANLP/NAACL Workshop on
-  Conversational systems-Volume 3</em>, pages 27-32. Association for Computational
-  Linguistics, 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpaek2006reinforcement" id="paek2006reinforcement">[1342006Paek]</a></dt><dd>
-T.&nbsp;Paek.
- Reinforcement learning for spoken dialogue systems: Comparing
-  strengths and weaknesses for practical deployment.
- In <em>Proc. Dialog-on-Dialog Workshop, INTERSPEECH</em>, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpapineni2002bleu" id="papineni2002bleu">[1352002Papineni et&nbsp;al.Papineni, Roukos, Ward, and Zhu]</a></dt><dd>
-K.&nbsp;Papineni, S.&nbsp;Roukos, T&nbsp;Ward, and W&nbsp;Zhu.
- BLEU: a method for automatic evaluation of machine translation.
- In <em>Proceedings of the 40th annual meeting on Association for
-  Computational Linguistics (ACL)</em>, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEPargellis2004" id="Pargellis2004">[1362004Pargellis et&nbsp;al.Pargellis, Kuo, and Lee]</a></dt><dd>
-A.&nbsp;N. Pargellis, H-K.&nbsp;J. Kuo, and C.&nbsp;Lee.
- An automatic dialogue generation platform for personalized dialogue
-  applications.
- <em>Speech Communication</em>, 42 (3-4): 329-351,
-  2004.
- doi: 10.1016/j.specom.2003.10.003.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpassonneau2014loqui" id="passonneau2014loqui">[1372014Passonneau and Sachar]</a></dt><dd>
-Rebecca Passonneau and Evaneet Sachar.
- Loqui human-human dialogue corpus (transcriptions and annotations).
- 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEperez2011conversational" id="perez2011conversational">[1382011Perez-Marin and Pascual-Nieto]</a></dt><dd>
-D.&nbsp;Perez-Marin and I.&nbsp;Pascual-Nieto.
- <em>Conversational Agents and Natural Language Interaction:
-  Techniques and Effective Practices</em>.
- IGI Global, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpetrik2004wizard" id="petrik2004wizard">[1392004Petrik]</a></dt><dd>
-S.&nbsp;Petrik.
- <em>Wizard of Oz Experiments on Speech Dialogue Systems</em>.
- PhD thesis, Citeseer, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpieraccini2009we" id="pieraccini2009we">[1402009Pieraccini et&nbsp;al.Pieraccini, Suendermann, Dayanidhi, and Liscombe]</a></dt><dd>
-R.&nbsp;Pieraccini, D.&nbsp;Suendermann, K.&nbsp;Dayanidhi, and J.&nbsp;Liscombe.
- Are we there yet? research in commercial spoken dialog systems.
- In <em>Text, Speech and Dialogue</em>, pages 3-13, 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpietquin2013survey" id="pietquin2013survey">[1412013Pietquin and Hastie]</a></dt><dd>
-O.&nbsp;Pietquin and H.&nbsp;Hastie.
- A survey on metrics for the evaluation of user simulations.
- <em>The knowledge engineering review</em>, 28 (01):
-  59-73, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpiot2015imitation" id="piot2015imitation">[1422015Piot et&nbsp;al.Piot, Geist, and Pietquin]</a></dt><dd>
-B.&nbsp;Piot, M.&nbsp;Geist, and O.&nbsp;Pietquin.
- Imitation learning applied to embodied conversational agents.
- In <em>4th Workshop on Machine Learning for Interactive Systems
-  (MLIS 2015)</em>, volume&nbsp;43, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEpotts2012goal" id="potts2012goal">[1432012Potts]</a></dt><dd>
-C.&nbsp;Potts.
- Goal-driven answers in the cards dialogue corpus.
- In <em>Proceedings of the 30th west coast conference on formal
-  linguistics</em>, pages 1-20, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEratnaparkhi2002trainable" id="ratnaparkhi2002trainable">[1442002Ratnaparkhi]</a></dt><dd>
-A.&nbsp;Ratnaparkhi.
- Trainable approaches to surface natural language generation and their
-  application to conversational dialog systems.
- <em>Computer Speech &amp; Language</em>, 16 (3):
-  435-455, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEraux2005let" id="raux2005let">[1452005Raux et&nbsp;al.Raux, Langner, Bohus, Black, and Eskenazi]</a></dt><dd>
-A.&nbsp;Raux, B.&nbsp;Langner, D.&nbsp;Bohus, A.&nbsp;W. Black, and M.&nbsp;Eskenazi.
- Let’s go public! taking a spoken dialog system to the real world.
- In <em>Proceedings of INTERSPEECH</em>. Citeseer, 2005.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEreithinger1997dialogue" id="reithinger1997dialogue">[1461997Reithinger and Klesen]</a></dt><dd>
-N.&nbsp;Reithinger and M.&nbsp;Klesen.
- Dialogue act classification using language models.
- In <em>EuroSpeech</em>, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEren2013dialog" id="ren2013dialog">[1472013Ren et&nbsp;al.Ren, Xu, Zhang, and Yan]</a></dt><dd>
-H.&nbsp;Ren, W.&nbsp;Xu, Y.&nbsp;Zhang, and Y.&nbsp;Yan.
- Dialog state tracking using conditional random fields.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITErenals2007recognition" id="renals2007recognition">[1482007Renals et&nbsp;al.Renals, Hain, and Bourlard]</a></dt><dd>
-S.&nbsp;Renals, T.&nbsp;Hain, and H.&nbsp;Bourlard.
- Recognition and understanding of meetings the AMI and AMIDA
-  projects.
- In <em>IEEE Workshop on Automatic Speech Recognition &amp;
-  Understanding (ASRU)</em>, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEreppen2004american" id="reppen2004american">[1492004Reppen and Ide]</a></dt><dd>
-R.&nbsp;Reppen and N.&nbsp;Ide.
- The american national corpus overall goals and the first release.
- <em>Journal of English Linguistics</em>, 32 (2):
-  105-113, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITErickel1999animated" id="rickel1999animated">[1501999Rickel and Johnson]</a></dt><dd>
-Jeff Rickel and W&nbsp;Lewis Johnson.
- Animated agents for procedural training in virtual reality:
-  Perception, cognition, and motor control.
- <em>Applied artificial intelligence</em>, 13 (4-5):
-  343-382, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITErieser2010natural" id="rieser2010natural">[1512010Rieser and Lemon]</a></dt><dd>
-V.&nbsp;Rieser and O.&nbsp;Lemon.
- Natural language generation as planning under uncertainty for spoken
-  dialogue systems.
- In <em>Empirical methods in natural language generation</em>, pages
-  105-120. Springer, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITERitter:2010:UMT:1857999.1858019" id="Ritter:2010:UMT:1857999.1858019">[1522010Ritter et&nbsp;al.Ritter, Cherry, and Dolan]</a></dt><dd>
-A.&nbsp;Ritter, C.&nbsp;Cherry, and B.&nbsp;Dolan.
- Unsupervised modeling of twitter conversations.
- In <em>North American Chapter of the Association for Computational
-  Linguistics (NAACL)</em>, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEritter2011data" id="ritter2011data">[1532011Ritter et&nbsp;al.Ritter, Cherry, and Dolan]</a></dt><dd>
-A.&nbsp;Ritter, C.&nbsp;Cherry, and W.&nbsp;B. Dolan.
- Data-driven response generation in social media.
- In <em>Proceedings of the conference on Empirical Methods in
-  Natural Language Processing</em>, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITErosenthal2015couldn" id="rosenthal2015couldn">[1542015Rosenthal and McKeown]</a></dt><dd>
-Sara Rosenthal and Kathleen McKeown.
- I couldn’t agree more: The role of conversational structure in
-  agreement and disagreement detection in online discussions.
- In <em>16th Annual Meeting of the Special Interest Group on
-  Discourse and Dialogue</em>, page 168, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITErosset2006ritel" id="rosset2006ritel">[1552006Rosset and Petel]</a></dt><dd>
-S.&nbsp;Rosset and S.&nbsp;Petel.
- The ritel corpus-an annotated human-machine open-domain question
-  answering spoken dialog corpus.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, 2006.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEroy2014tvd" id="roy2014tvd">[1562014Roy et&nbsp;al.Roy, Guinaudeau, Bredin, and Barras]</a></dt><dd>
-A.&nbsp;Roy, C.&nbsp;Guinaudeau, H.&nbsp;Bredin, and C.&nbsp;Barras.
- TVD: a reproducible and multiply aligned tv series dataset.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, volume&nbsp;2, 2014.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITERuppenhoferEtAl2006:ExtTeoR.dPractice" id="RuppenhoferEtAl2006:ExtTeoR.dPractice">[1572006Ruppenhofer et&nbsp;al.Ruppenhofer, Ellsworth, Petruck, Johnson, and Scheffczyk]</a></dt><dd>
-J.&nbsp;Ruppenhofer, M.&nbsp;Ellsworth, M.&nbsp;R.L. Petruck, C.&nbsp;R. Johnson, and
-  J.&nbsp;Scheffczyk.
- <em>FrameNet II: Extended Theory and Practice</em>.
- International Computer Science Institute, 2006.
- Distributed with the FrameNet data.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEschatzmann2009hidden" id="schatzmann2009hidden">[1582009Schatzmann and Young]</a></dt><dd>
-J.&nbsp;Schatzmann and S.&nbsp;Young.
- The hidden agenda user simulation model.
- <em>IEEE transactions on audio, speech, and language processing</em>,
-  17 (4): 733-747, 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEschatzmann2005quantitative" id="schatzmann2005quantitative">[1592005Schatzmann et&nbsp;al.Schatzmann, Georgila, and Young]</a></dt><dd>
-J.&nbsp;Schatzmann, K.&nbsp;Georgila, and S.&nbsp;Young.
- Quantitative evaluation of user simulation techniques for spoken
-  dialogue systems.
- In <em>6th Special Interest Group on Discourse and Dialogue
-  (SIGDIAL)</em>, 2005.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEschatzmann2007agenda" id="schatzmann2007agenda">[1602007Schatzmann et&nbsp;al.Schatzmann, Thomson, Weilhammer, Ye, and Young]</a></dt><dd>
-J.&nbsp;Schatzmann, B.&nbsp;Thomson, K.&nbsp;Weilhammer, .&nbsp;Ye, and S.&nbsp;Young.
- Agenda-based user simulation for bootstrapping a pomdp dialogue
-  system.
- In <em>Human Language Technologies 2007: The Conference of the
-  North American Chapter of the Association for Computational Linguistics;
-  Companion Volume, Short Papers</em>, pages 149-152, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEschrading2015analyzing" id="schrading2015analyzing">[1612015Schrading]</a></dt><dd>
-J.&nbsp;N. Schrading.
- Analyzing domestic abuse using natural language processing on social
-  media data.
- Master's thesis, Rochester Institute of Technology, United States,
-  2015.
- <tt>http://scholarworks.rit.edu/theses</tt>.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEray4183analysis" id="ray4183analysis">[1622015Schrading et&nbsp;al.Schrading, Alm, Ptucha, and Homan]</a></dt><dd>
-N.&nbsp;Schrading, C.&nbsp;O. Alm, R.&nbsp;Ptucha, and C.&nbsp;M. Homan.
- An analysis of domestic a.se discourse on reddit.
- In <em>Empirical Methods in Natural Language Processing (EMNLP)</em>,
-  2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEschuler2005verbnet" id="schuler2005verbnet">[1632005Schuler]</a></dt><dd>
-K.&nbsp;K. Schuler.
- <em>VerbNet: A broad-coverage, comprehensive verb lexicon</em>.
- PhD thesis, University of Pennsylvania, 2005.
- Paper AAI3179808.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEserban2015textbased" id="serban2015textbased">[1642015Serban and Pineau]</a></dt><dd>
-I.&nbsp;V. Serban and J.&nbsp;Pineau.
- Text-based speaker identification for multi-participant open-domain
-  dialogue systems.
- <em>Neural Information Processing Systems Workshop on Machine
-  Learning for Spoken Language Understanding</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITE2015arXiv150704808S" id="2015arXiv150704808S">[1652016Serban et&nbsp;al.Serban, Sordoni, Bengio, Courville, and Pineau]</a></dt><dd>
-I.&nbsp;V. Serban, A.&nbsp;Sordoni, Y.&nbsp;Bengio, A.&nbsp;Courville, and J.&nbsp;Pineau.
- Building End-To-End Dialogue Systems Using Generative Hierarchical
-  Neural Networks.
- In <em>AAAI</em>, 2016.
- In press.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEserban2016multiresolution" id="serban2016multiresolution">[1662017aSerban et&nbsp;al.Serban, Klinger, Tesauro, Talamadupula, Zhou, Bengio, and Courville]</a></dt><dd>
-I.&nbsp;V. Serban, T.&nbsp;Klinger, G.&nbsp;Tesauro, K.&nbsp;Talamadupula, B.&nbsp;Zhou, Y.&nbsp;Bengio, and
-  A.&nbsp;Courville.
- Multiresolution recurrent neural networks: An application to dialogue
-  response generation.
- In <em>AAAI Conference</em>, 2017a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEserban2016hierarchical" id="serban2016hierarchical">[1672017bSerban et&nbsp;al.Serban, Sordoni, Lowe, Charlin, Pineau, Courville, and Bengio]</a></dt><dd>
-I.&nbsp;V. Serban, A.&nbsp;Sordoni, R.&nbsp;Lowe, L.&nbsp;Charlin, J.&nbsp;Pineau, A.&nbsp;Courville, and
-  Y.&nbsp;Bengio.
- A hierarchical latent variable encoder-decoder model for generating
-  dialogues.
- In <em>AAAI Conference</em>, 2017b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshaikh2010mpc" id="shaikh2010mpc">[1682010Shaikh et&nbsp;al.Shaikh, Strzalkowski, Broadwell, Stromer-Galley, Taylor, and Webb]</a></dt><dd>
-S.&nbsp;Shaikh, T.&nbsp;Strzalkowski, G.&nbsp;A. Broadwell, J.&nbsp;Stromer-Galley, S.&nbsp;M. Taylor,
-  and N.&nbsp;Webb.
- Mpc: A multi-party chat corpus for modeling social phenomena in
-  discourse.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshang2015neural" id="shang2015neural">[1692015Shang et&nbsp;al.Shang, Lu, and Li]</a></dt><dd>
-L.&nbsp;Shang, Z.&nbsp;Lu, and H.&nbsp;Li.
- Neural responding machine for short-text conversation.
- <em>arXiv preprint arXiv:1503.02364</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshaoul2009usenet" id="shaoul2009usenet">[1702009Shaoul and Westbury]</a></dt><dd>
-C.&nbsp;Shaoul and C.&nbsp;Westbury.
- A usenet corpus (2005-2009), 2009.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsharma2016natural" id="sharma2016natural">[1712016Sharma et&nbsp;al.Sharma, He, Suleman, Schulz, and Bachman]</a></dt><dd>
-S.&nbsp;Sharma, J.&nbsp;He, K.&nbsp;Suleman, H.&nbsp;Schulz, and P.&nbsp;Bachman.
- Natural language generation in dialogue using lexicalized and
-  delexicalized data.
- <em>arXiv preprint arXiv:1606.03632</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshawar2007different" id="shawar2007different">[1722007aShawar and Atwell]</a></dt><dd>
-B.&nbsp;A. Shawar and E.&nbsp;Atwell.
- Different measurements metrics to evaluate a chatbot system.
- In <em>Proceedings of the Workshop on Bridging the Gap: Academic
-  and Industrial Research in Dialog Technologies</em>, pages 89-96,
-  2007a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshawar2007chatbots" id="shawar2007chatbots">[1732007bShawar and Atwell]</a></dt><dd>
-B.&nbsp;A. Shawar and Eric Atwell.
- Chatbots: are they really useful?
- In <em>LDV Forum</em>, volume&nbsp;22, pages 29-49, 2007b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEshriberg2004icsi" id="shriberg2004icsi">[1742004Shriberg et&nbsp;al.Shriberg, Dhillon, Bhagat, Ang, and Carvey]</a></dt><dd>
-Elizabeth Shriberg, Raj Dhillon, Sonali Bhagat, Jeremy Ang, and Hannah Carvey.
- The icsi meeting recorder dialog act (mrda) corpus.
- Technical report, DTIC Document, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsimpson1993black" id="simpson1993black">[1751993Simpson and Eraser]</a></dt><dd>
-A.&nbsp;Simpson and N.&nbsp;M Eraser.
- Black box and glass box evaluation of the sundial system.
- In <em>Third European Conference on Speech Communication and
-  Technology</em>, 1993.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsingh2002optimizing" id="singh2002optimizing">[1762002Singh et&nbsp;al.Singh, Litman, Kearns, and Walker]</a></dt><dd>
-S.&nbsp;Singh, D.&nbsp;Litman, M.&nbsp;Kearns, and M.&nbsp;Walker.
- Optimizing dialogue management with reinforcement learning:
-  Experiments with the njfun system.
- <em>Journal of Artificial Intelligence Research</em>, pages 105-133,
-  2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsingh1999reinforcement" id="singh1999reinforcement">[1771999Singh et&nbsp;al.Singh, Kearns, Litman, and Walker]</a></dt><dd>
-S.&nbsp;P. Singh, M.&nbsp;J. Kearns, D.&nbsp;J. Litman, and M.&nbsp;A. Walker.
- Reinforcement learning for spoken dialogue systems.
- In <em>Neural Information Processing Systems</em>, 1999.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsordoni2015aneural" id="sordoni2015aneural">[1782015Sordoni et&nbsp;al.Sordoni, Galley, Auli, Brockett, Ji, Mitchell, Nie, Gao, and Dolan]</a></dt><dd>
-A.&nbsp;Sordoni, M.&nbsp;Galley, M.&nbsp;Auli, C.&nbsp;Brockett, Y.&nbsp;Ji, M.&nbsp;Mitchell, J.&nbsp;Nie,
-  J.&nbsp;Gao, and B.&nbsp;Dolan.
- A neural network approach to context-sensitive generation of
-  conversational responses.
- In <em>Conference of the North American Chapter of the Association
-  for Computational Linguistics (NAACL-HLT 2015)</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEstenstrom2002trends" id="stenstrom2002trends">[1792002Stenstr&#246;m et&nbsp;al.Stenstr&#246;m, Andersen, and Hasund]</a></dt><dd>
-A.&nbsp;Stenstr&#246;m, G.&nbsp;Andersen, and I.&nbsp;K. Hasund.
- <em>Trends in teenage talk: Corpus compilation, analysis and
-  findings</em>, volume&nbsp;8.
- J. Benjamins, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEstent2004trainable" id="stent2004trainable">[1802004Stent et&nbsp;al.Stent, Prasad, and Walker]</a></dt><dd>
-A.&nbsp;Stent, R.&nbsp;Prasad, and M.&nbsp;Walker.
- Trainable sentence planning for complex information presentation in
-  spoken dialog systems.
- In <em>Proceedings of the 42nd annual meeting on association for
-  computational linguistics</em>, page&nbsp;79. Association for Computational
-  Linguistics, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEstolcke2000dialogue" id="stolcke2000dialogue">[1812000Stolcke et&nbsp;al.Stolcke, Ries, Coccaro, Shriberg, Bates, Jurafsky, Taylor, Martin, Van Ess-Dykema, and Meteer]</a></dt><dd>
-A.&nbsp;Stolcke, K.&nbsp;Ries, N.&nbsp;Coccaro, E.&nbsp;Shriberg, R.&nbsp;Bates, D.&nbsp;Jurafsky, P.&nbsp;Taylor,
-  R.&nbsp;Martin, C.&nbsp;Van Ess-Dykema, and M.&nbsp;Meteer.
- Dialogue act modeling for automatic tagging and recognition of
-  conversational speech.
- <em>Computational linguistics</em>, 26 (3): 339-373,
-  2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsu2013dialogue" id="su2013dialogue">[1822013Su et&nbsp;al.Su, Wang, Yu, and Lee]</a></dt><dd>
-P.-H. Su, Y.-B. Wang, T.-H. Yu, and L.-S. Lee.
- A dialogue game framework with personalized training using
-  reinforcement learning for computer-assisted language learning.
- In <em>2013 IEEE International Conference on Acoustics, Speech and
-  Signal Processing</em>, pages 8213-8217. IEEE, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsu2015learning" id="su2015learning">[1832015Su et&nbsp;al.Su, Vandyke, Gasic, Kim, Mrksic, Wen, and Young]</a></dt><dd>
-P.-H. Su, D.&nbsp;Vandyke, M.&nbsp;Gasic, D.&nbsp;Kim, N.&nbsp;Mrksic, T.-H. Wen, and S.&nbsp;Young.
- Learning from real users: Rating dialogue success with neural
-  networks for reinforcement learning in spoken dialogue systems.
- In <em>INTERSPEECH</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsu2016continuously" id="su2016continuously">[1842016Su et&nbsp;al.Su, Gasic, Mrksic, Rojas-Barahona, Ultes, Vandyke, Wen, and Young]</a></dt><dd>
-P.-H. Su, M.&nbsp;Gasic, N.&nbsp;Mrksic, L.&nbsp;Rojas-Barahona, S.&nbsp;Ultes, D.&nbsp;Vandyke, T.-H.
-  Wen, and S.&nbsp;Young.
- Continuously learning neural dialogue management.
- <em>arXiv preprint arXiv:1606.02689</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsukhbaatar15" id="sukhbaatar15">[1852015Sukhbaatar et&nbsp;al.Sukhbaatar, Szlam, Weston, and Fergus]</a></dt><dd>
-S.&nbsp;Sukhbaatar, A.&nbsp;Szlam, J.&nbsp;Weston, and R.&nbsp;Fergus.
- End-to-end memory networks.
- In <em>Neural Information Processing Systems (NIPS)</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsun2011multimodal" id="sun2011multimodal">[1862011Sun et&nbsp;al.Sun, Lichtenauer, Valstar, Nijholt, and Pantic]</a></dt><dd>
-X.&nbsp;Sun, J.&nbsp;Lichtenauer, M.&nbsp;Valstar, A.&nbsp;Nijholt, and M.&nbsp;Pantic.
- A multimodal database for mimicry analysis.
- In <em>Affective Computing and Intelligent Interaction</em>, pages
-  367-376. Springer, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEsvartvik1990london" id="svartvik1990london">[1871990Svartvik]</a></dt><dd>
-J.&nbsp;Svartvik.
- <em>The London-Lund corpus of spoken English: Description and
-  research</em>.
- Number&nbsp;82 in 1. Lund University Press, 1990.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEthomson2010bayesian" id="thomson2010bayesian">[1882010Thomson and Young]</a></dt><dd>
-B.&nbsp;Thomson and S.&nbsp;Young.
- Bayesian update of dialogue state: A POMDP framework for spoken
-  dialogue systems.
- <em>Computer Speech &amp; Language</em>, 24 (4):
-  562-588, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEtiedemann2012parallel" id="tiedemann2012parallel">[1892012Tiedemann]</a></dt><dd>
-J.&nbsp;Tiedemann.
- Parallel data, tools and interfaces in opus.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, 2012.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEtraum2002embodied" id="traum2002embodied">[1902002Traum and Rickel]</a></dt><dd>
-David Traum and Jeff Rickel.
- Embodied agents for multi-party dialogue in immersive virtual worlds.
- In <em>Proceedings of the first international joint conference on
-  Autonomous agents and multiagent systems: part 2</em>, pages 766-773. ACM, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEturing1950computing" id="turing1950computing">[1911950Turing]</a></dt><dd>
-A.&nbsp;M. Turing.
- Computing machinery and intelligence.
- <em>Mind</em>, pages 433-460, 1950.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEuthus2013ubuntu" id="uthus2013ubuntu">[1922013Uthus and Aha]</a></dt><dd>
-D.&nbsp;C Uthus and D.&nbsp;W Aha.
- The ubuntu chat corpus for multiparticipant chat analysis.
- In <em>AAAI Spring Symposium: Analyzing Microtext</em>, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEvandeventer20154d" id="vandeventer20154d">[1932015Vandeventer et&nbsp;al.Vandeventer, Aubrey, Rosin, and Marshall]</a></dt><dd>
-J.&nbsp;Vandeventer, A.&nbsp;J. Aubrey, P.&nbsp;L. Rosin, and D.&nbsp;Marshall.
- 4d cardiff conversation database (4D CCDb): A 4D database of
-  natural, dyadic conversations.
- In <em>Proceedings of the 1st Joint Conference on Facial Analysis,
-  Animation and Auditory-Visual Speech Processing (FAAVSP 2015)</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEvandyke2015multi" id="vandyke2015multi">[1942015Vandyke et&nbsp;al.Vandyke, Su, Gasic, Mrksic, Wen, and Young]</a></dt><dd>
-D.&nbsp;Vandyke, P.-H. Su, M.&nbsp;Gasic, N.&nbsp;Mrksic, T.-H. Wen, and S.&nbsp;Young.
- Multi-domain dialogue success classifiers for policy training.
- In <em>Automatic Speech Recognition and Understanding (ASRU), 2015
-  IEEE Workshop on</em>, pages 763-770. IEEE, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEvinyals2015neural" id="vinyals2015neural">[1952015Vinyals and Le]</a></dt><dd>
-O.&nbsp;Vinyals and Q.&nbsp;Le.
- A neural conversational model.
- <em>arXiv preprint arXiv:1506.05869</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwalker1997paradise" id="walker1997paradise">[1961997Walker et&nbsp;al.Walker, Litman, Kamm, and Abella]</a></dt><dd>
-M.&nbsp;A. Walker, D.&nbsp;J. Litman, C.&nbsp;A. Kamm, and A.&nbsp;Abella.
- Paradise: A framework for evaluating spoken dialogue agents.
- In <em>Proceedings of the eighth conference on European chapter of
-  the Association for Computational Linguistics</em>, pages 271-280, 1997.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwalker2002training" id="walker2002training">[1972002Walker et&nbsp;al.Walker, Rambow, and Rogati]</a></dt><dd>
-M.&nbsp;A. Walker, O.&nbsp;C. Rambow, and M.&nbsp;Rogati.
- Training a sentence planner for spoken dialogue using boosting.
- <em>Computer Speech &amp; Language</em>, 16 (3):
-  409-433, 2002.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwalker2011" id="walker2011">[1982011Walker et&nbsp;al.Walker, Grant, Sawyer, Lin, Wardrip-Fruin, and Buell]</a></dt><dd>
-M.&nbsp;A. Walker, R.&nbsp;Grant, J.&nbsp;Sawyer, G.&nbsp;I. Lin, N.&nbsp;Wardrip-Fruin, and M.&nbsp;Buell.
- Perceived or not perceived: Film character models for expressive nlg.
- In <em>ICIDS</em>, pages 109-121, 2011.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwalker2012annotated" id="walker2012annotated">[1992012aWalker et&nbsp;al.Walker, Lin, and Sawyer]</a></dt><dd>
-M.&nbsp;A Walker, G.&nbsp;I. Lin, and J.&nbsp;Sawyer.
- An annotated corpus of film dialogue for learning and characterizing
-  character style.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, pages 1373-1378, 2012a.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwalker2012corpus" id="walker2012corpus">[2002012bWalker et&nbsp;al.Walker, Tree, Anand, Abbott, and King]</a></dt><dd>
-M.&nbsp;A Walker, J.&nbsp;E.&nbsp;F. Tree, P.&nbsp;Anand, R.&nbsp;Abbott, and J.&nbsp;King.
- A corpus for research on deliberation and debate.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, pages 812-817, 2012b.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwang2013simple" id="wang2013simple">[2012013Wang and Lemon]</a></dt><dd>
-Z.&nbsp;Wang and O.&nbsp;Lemon.
- A simple and generic belief tracking mechanism for the dialog state
-  tracking challenge: On the believability of observed information.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwebb2010corpus" id="webb2010corpus">[2022010Webb]</a></dt><dd>
-S.&nbsp;Webb.
- A corpus driven study of the potential for vocabulary learning
-  through watching movies.
- <em>International Journal of Corpus Linguistics</em>, 15
-  (4): 497-519, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEweizenbaum1966eliza" id="weizenbaum1966eliza">[2031966Weizenbaum]</a></dt><dd>
-J.&nbsp;Weizenbaum.
- ELIZA—a computer program for the study of natural language
-  communication between man and machine.
- <em>Communications of the ACM</em>, 9 (1): 36-45,
-  1966.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwen2015stochastic" id="wen2015stochastic">[2042015Wen et&nbsp;al.Wen, Gasic, Kim, Mrksic, Su, Vandyke, and Young]</a></dt><dd>
-T.&nbsp;Wen, M.&nbsp;Gasic, D.&nbsp;Kim, N.&nbsp;Mrksic, P.&nbsp;Su, D.&nbsp;Vandyke, and
-  S.&nbsp;Young.
- Stochastic language generation in dialogue using recurrent neural
-  networks with convolutional sentence reranking.
- <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwen2016multi" id="wen2016multi">[2052016Wen et&nbsp;al.Wen, Gasic, Mrksic, Rojas-Barahona, Su, Vandyke, and Young]</a></dt><dd>
-T.-H. Wen, M.&nbsp;Gasic, N.&nbsp;Mrksic, L.&nbsp;M. Rojas-Barahona, P.-H. Su, D.&nbsp;Vandyke, and
-  S.&nbsp;Young.
- Multi-domain neural network language generation for spoken dialogue
-  systems.
- In <em>NAACL HLT</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEweston2016dialog" id="weston2016dialog">[2062016Weston]</a></dt><dd>
-J.&nbsp;Weston.
- Dialog-based language learning.
- <em>arXiv preprint arXiv:1604.06045</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEweston15" id="weston15">[2072015Weston et&nbsp;al.Weston, Chopra, and Bordes]</a></dt><dd>
-J.&nbsp;Weston, S.&nbsp;Chopra, and A.&nbsp;Bordes.
- Memory networks.
- In <em>International Conference on Learning Representations
-  (ICLR)</em>, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwilliams2013dialog" id="williams2013dialog">[2082013Williams et&nbsp;al.Williams, Raux, Ramachandran, and Black]</a></dt><dd>
-J.&nbsp;Williams, A.&nbsp;Raux, D.&nbsp;Ramachandran, and A.&nbsp;Black.
- The dialog state tracking challenge.
- In <em>Special Interest Group on Discourse and Dialogue (SIGDIAL)</em>,
-  2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwilliams2007partially" id="williams2007partially">[2092007Williams and Young]</a></dt><dd>
-J.&nbsp;D. Williams and S.&nbsp;Young.
- Partially observable markov decision processes for spoken dialog
-  systems.
- <em>Computer Speech &amp; Language</em>, 21 (2):
-  393-422, 2007.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwilliams2016end" id="williams2016end">[2102016Williams and Zweig]</a></dt><dd>
-J.&nbsp;D. Williams and G.&nbsp;Zweig.
- End-to-end lstm-based dialog control optimized with supervised and
-  reinforcement learning.
- <em>arXiv preprint arXiv:1606.01269</em>, 2016.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwolska2004annotated" id="wolska2004annotated">[2112004Wolska et&nbsp;al.Wolska, Vo, Tsovaltzi, Kruijff-Korbayov&#225;, Karagjosova, Horacek, Fiedler, and Benzm&#252;ller]</a></dt><dd>
-M.&nbsp;Wolska, Q.&nbsp;B. Vo, D.&nbsp;Tsovaltzi, I.&nbsp;Kruijff-Korbayov&#225;, E.&nbsp;Karagjosova,
-  H.&nbsp;Horacek, A.&nbsp;Fiedler, and C.&nbsp;Benzm&#252;ller.
- An annotated corpus of tutorial dialogs on mathematical theorem
-  proving.
- In <em>The International Conference on Language Resources and
-  Evaluation (LREC)</em>, 2004.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEwrede2003relationship" id="wrede2003relationship">[2122003Wrede and Shriberg]</a></dt><dd>
-Britta Wrede and Elizabeth Shriberg.
- Relationship between dialogue acts and hot spots in meetings.
- In <em>Automatic Speech Recognition and Understanding, 2003.
-  ASRU'03. 2003 IEEE Workshop on</em>, pages 180-185. IEEE, 2003.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEyang2015wikiqa" id="yang2015wikiqa">[2132015Yang et&nbsp;al.Yang, Yih, and Meek]</a></dt><dd>
-Yi&nbsp;Yang, Wen-tau Yih, and Christopher Meek.
- Wikiqa: A challenge dataset for open-domain question answering.
- In <em>EMNLP</em>, pages 2013-2018. Citeseer, 2015.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEyang2010collection" id="yang2010collection">[2142010Yang et&nbsp;al.Yang, Li, Zhu, King, Levow, and Meng]</a></dt><dd>
-Z.&nbsp;Yang, B.&nbsp;Li, Y.&nbsp;Zhu, I.&nbsp;King, G.&nbsp;Levow, and H.&nbsp;Meng.
- Collection of user judgments on spoken dialog system with
-  crowdsourcing.
- In <em>Spoken Language Technology Workshop (SLT), 2010 IEEE</em>, pages
-  277-282, 2010.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEyoung2013pomdp" id="young2013pomdp">[2152013Young et&nbsp;al.Young, Gasic, Thomson, and Williams]</a></dt><dd>
-S.&nbsp;Young, M.&nbsp;Gasic, B.&nbsp;Thomson, and J.&nbsp;D. Williams.
- POMDP-based statistical spoken dialog systems: A review.
- <em>Proceedings of the IEEE</em>, 101 (5):
-  1160-1179, 2013.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEyoung2000probabilistic" id="young2000probabilistic">[2162000Young]</a></dt><dd>
-S.&nbsp;J. Young.
- Probabilistic methods in spoken-dialogue systems.
- <em>Philosophical Transactions of the Royal Society of London.
-  Series A: Mathematical, Physical and Engineering Sciences</em>, 358
-  (1769), 2000.
-
-<div class="p"><!----></div>
-</dd>
- <dt><a href="#CITEzhang2016conversational" id="zhang2016conversational">[2172016Zhang et&nbsp;al.Zhang, Kumar, Ravi, and Danescu-Niculescu-Mizil]</a></dt><dd>
-Justine Zhang, Ravi Kumar, Sujith Ravi, and Cristian Danescu-Niculescu-Mizil.
- Conversational flow in oxford-style debates.
- <em>arXiv preprint arXiv:1604.03114</em>, 2016.</dd>
-</dl>
-</span>
-
-<div class="p"><!----></div>
-<hr /><h3>Footnotes:</h3>
-
-<div class="p"><!----></div>
-<a id="tthFtNtAAB"></a><a href="#tthFrefAAB"><sup>1</sup></a>Although the model does not require intermediate labels, it consists of sub-components whose parameters are trained with different objective function. Therefore, strictly speaking, this is not an end-to-end model.
-<div class="p"><!----></div>
-<a id="tthFtNtAAC"></a><a href="#tthFrefAAC"><sup>2</sup></a>Machine-machine dialogue corpora are not of interest to us, because they typically differ significantly from natural human language. Furthermore, user simulation models are outside the scope of this survey.
-<div class="p"><!----></div>
-<a id="tthFtNtAAD"></a><a href="#tthFrefAAD"><sup>3</sup></a>For more information on dialogue hot spots and how they relate to dialogue acts, see [<a href="#wrede2003relationship" id="CITEwrede2003relationship" class="tth_citation">Wrede and Shriberg, 2003</a>].
-<div class="p"><!----></div>
-<a id="tthFtNtAAE"></a><a href="#tthFrefAAE"><sup>4</sup></a><a href="http://www.imsdb.com"><tt>http://www.imsdb.com</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtAAF"></a><a href="#tthFrefAAF"><sup>5</sup></a><a href="http://alexanderstreet.com/products/film-scripts-online-series"><tt>http://alexanderstreet.com/products/film-scripts-online-series</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtAAG"></a><a href="#tthFrefAAG"><sup>6</sup></a><a href="http://www.opensubtitles.org"><tt>http://www.opensubtitles.org</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtAAH"></a><a href="#tthFrefAAH"><sup>7</sup></a><a href="http://www.reddit.com"><tt>http://www.reddit.com</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtAAI"></a><a href="#tthFrefAAI"><sup>8</sup></a><a href="http://www.twitter.com"><tt>http://www.twitter.com</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtAAJ"></a><a href="#tthFrefAAJ"><sup>9</sup></a><a href="http://www.usenet.net"><tt>http://www.usenet.net</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABA"></a><a href="#tthFrefABA"><sup>10</sup></a><a href="http://www.reddit.com"><tt>http://www.reddit.com</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABB"></a><a href="#tthFrefABB"><sup>11</sup></a><a href="https://www.reddit.com/r/datasets/comments/3bxlg7/i\_have\_every\_publicly\_available\_reddit\_comment/"><tt>https://www.reddit.com/r/datasets/comments/3bxlg7/i\_have\_every\_publicly\_available\_reddit\_comment/</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABC"></a><a href="#tthFrefABC"><sup>12</sup></a><a href="http://irclogs.ubuntu.com"><tt>http://irclogs.ubuntu.com</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABD"></a><a href="#tthFrefABD"><sup>13</sup></a><a href="http://en.omdb.org"><tt>http://en.omdb.org</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABE"></a><a href="#tthFrefABE"><sup>14</sup></a><a href="http://movielens.org"><tt>http://movielens.org</tt></a>
-<div class="p"><!----></div>
-<a id="tthFtNtABF"></a><a href="#tthFrefABF"><sup>15</sup></a>Most of the largest technical support datasets are based on commercial technical support channels, which are proprietary and never released to the public for privacy reasons.
-<br /><br /><hr /><small>File translated from
-T<sub><span class="small">E</span></sub>X
-by <a href="http://hutchinson.belmont.ma.us/tth/">
-T<sub><span class="small">T</span></sub>H</a>,
-version 4.06.<br />On 13 Mar 2017, 21:44.</small>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="A showcase of the best typefaces from the Google web fonts directory." name="description">
+	<title>A Survey of Available Corpora for Building Data-Driven Dialogue Systems</title><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href="stylesheets/application.css" media="screen" rel='stylesheet' type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans:300,400,600,700,800|Gentium+Book+Basic:400,400italic|Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Gravitas+One|Lato:100,900|Old+Standard+TT:400,400italic|PT+Serif:400|PT+Sans+Narrow:700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:700|Merriweather:400,900|Playfair+Display:400,900,700italic|Oswald:700|PT+Mono' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+	<
+	   td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
+	   td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
+	   td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
+	   td div.norm {line-height:normal;}
+	   span.roman {font-family: serif; font-style: normal; font-weight: normal;}
+	   span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
+	   span.overacc1 {position: relative;  left: .6em; top: -1.2ex;}
+	</style>
+	<style type="text/css">
+	   .tiny {font-size:30%;}
+	   .scriptsize {font-size:xx-small;}
+	   .footnotesize {font-size:x-small;}
+	   .smaller {font-size:smaller;}
+	   .small {font-size:small;}
+	   .normalsize {font-size:medium;}
+	   .large {font-size:large;}
+	   .larger {font-size:x-large;}
+	   .largerstill {font-size:xx-large;}
+	   .huge {font-size:300%;}
+	</style>
+</head>
+<body class="index">
+	<section id="container">
+		<section class="samples">
+			<section class="sample" id="papertitle">
+				<section class="text">
+					<div class="body">
+						<h1>A Survey of Available Corpora for Building Data-Driven Dialogue Systems</h1>
+						<hr>
+						<p>During the past decade, several areas of speech and language understanding have witnessed substantial breakthroughs from the use of data-driven models. In the area of dialogue systems, the trend is less obvious, and most practical systems are still built through significant engineering and expert knowledge. Nevertheless, several recent results suggest that data-driven approaches are feasible and quite promising. To facilitate research in this area, we have carried out a wide survey of publicly available datasets suitable for data-driven learning of dialogue systems. We discuss important characteristics of these datasets, how they can be used to learn diverse dialogue strategies, and their other potential uses. We also examine methods for transfer learning between datasets and the use of external knowledge. Finally, we discuss appropriate choice of evaluation metrics for the learning objective.</p>
+						<ul>
+							<li>
+								<a href="http://www.iulianserban.com/">Iulian Vlad Serban</a>
+							</li>
+							<li>
+								<a href="http://cs.mcgill.ca/~rlowe1/">Ryan Lowe</a>
+							</li>
+							<li>
+								<a href="http://peterhenderson.co">Peter Henderson</a>
+							</li>
+							<li>
+								<a href="http://www.cs.toronto.edu/~lcharlin/">Laurent Charlin</a>
+							</li>
+							<li>
+								<a href="http://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a>
+							</li>
+							<span><a href="https://arxiv.org/abs/1512.05742">PDF</a>&nbsp;&nbsp;&nbsp;&nbsp;<!--a href="">BIBTEX</a></span--></span>
+						</ul><span></span>
+					</div>
+				</section>
+			</section>
+
+			<section class="sample" id="title">
+        <span><br>
+  			<br></span>
+				<span></span>
+				<section class="text">
+					<span><br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br> <h2><span>Human-Machine Dialogue Datasets</span></h2></span>
+
+					<div style="text-align:center">
+
+						<span></span>
+						<div class="footnotesize">
+							<span></span>
+							<table border="1">
+								<tr>
+									<td align="left">Name</td>
+									<td align="left">Type</td>
+									<td align="left">Topics</td>
+									<td align="center">Avg. # of turns</td>
+									<td align="center">Total # of dialogues</td>
+									<td align="center">Total # of words</td>
+									<td align="left">Description</td>
+								</tr>
+
+								<tr>
+									<td align="left">
+										DSTC1<br/>[<a class="tth_citeref" href="./references.html#williams2013dialog">Williams et&nbsp;al., 2013</a>]
+									</td>
+									<td align="left">Spoken</td>
+									<td align="left">Bus schedules</td>
+									<td align="center">13.56</td>
+									<td align="center">15,000</td>
+									<td align="center">3.7M</td>
+									<td align="left">Bus ride information system</td>
+								</tr>
+								<tr>
+									<td align="left">
+										DSTC2<br/>[<a class="tth_citeref" href="./references.html#henderson2014second">Henderson et&nbsp;al., 2014b</a>]
+									</td>
+									<td align="left">Spoken</td>
+									<td align="left">Restaurants</td>
+									<td align="center">7.88</td>
+									<td align="center">3,000</td>
+									<td align="center">432K</td>
+									<td align="left">Restaurant booking system</td>
+								</tr>
+								<tr>
+									<td align="left">
+										DSTC3<br/>[<a class="tth_citeref" href="./references.html#henderson2014dialog">Henderson et&nbsp;al., 2014a</a>]
+									</td>
+									<td align="left">Spoken</td>
+									<td align="left">Tourist information</td>
+									<td align="center">8.27</td>
+									<td align="center">2,265</td>
+									<td align="center">403K</td>
+									<td align="left">Information for tourists</td>
+								</tr>
+								<tr>
+									<td align="left">CMU Communicator Corpus<br/>[<a class="tth_citeref" href="./references.html#bennett2002carnegie">Bennett and Rudnicky, 2002</a>]</td>
+									<td align="left">Spoken</td>
+									<td align="left">Travel</td>
+									<td align="center">11.67</td>
+									<td align="center">15,481</td>
+									<td align="center">2M*</td>
+									<td align="left">Travel planning and booking system</td>
+								</tr>
+								<tr>
+									<td align="left">ATIS Pilot Corpus<br/>[<a class="tth_citeref" href="./references.html#hemphill1990atis">Hemphill et&nbsp;al., 1990</a>]</td>
+									<td align="left">Spoken</td>
+									<td align="left">Travel</td>
+									<td align="center">25.4</td>
+									<td align="center">41</td>
+									<td align="center">11.4K*</td>
+									<td align="left">Travel planning and booking system</td>
+								</tr>
+
+								<tr>
+									<td align="left">Ritel Corpus<br/>[<a class="tth_citeref" href="./references.html#rosset2006ritel">Rosset and Petel, 2006</a>]</td>
+									<td align="left">Spoken</td>
+									<td align="left">Unrestricted/ Diverse Topics</td>
+									<td align="center">9.3*</td>
+									<td align="center">582</td>
+									<td align="center">60k</td>
+									<td align="left">An annotated open-domain question answering spoken dialogue system</td>
+								</tr>
+								<tr>
+									<td align="left">DIALOG Mathematical Proofs [<a class="tth_citeref" href="./references.html#wolska2004annotated">Wolska et&nbsp;al., 2004</a>]</td>
+									<td align="left">Spoken</td>
+									<td align="left">Mathematics</td>
+									<td align="center">12</td>
+									<td align="center">66</td>
+									<td align="center">8.7K*</td>
+									<td align="left">Humans interact with computer system to do mathematical theorem proving</td>
+								</tr>
+
+								<tr>
+									<td align="left">MATCH Corpus <br/> [<a class="tth_citeref" href="./references.html#georgila2010match">Georgila et&nbsp;al., 2010</a>]</td>
+									<td align="left">Spoken</td>
+									<td align="left">Appointment Scheduling</td>
+									<td align="center">14.0</td>
+									<td align="center">447</td>
+									<td align="center">69K*</td>
+									<td align="left">A system for scheduling appointments.</td>
+								</tr>
+
+								<tr>
+									<td align="left">Maluuba Frames<br/>[<a class="tth_citeref" href="./references.html#elframes">El&nbsp;Asri et&nbsp;al., 2017</a>]</td>
+									<td align="left">Chat, QA &amp; Recommendation</td>
+									<td align="left">Travel &amp; Vacation Booking</td>
+									<td align="center">15</td>
+									<td align="center">1369</td>
+									<td align="center">-</td>
+									<td align="left">For goal-driven dialogue systems. Semantic frames labeled and actions taken on a knowledge-base annotated.</td>
+								</tr>
+							</table>
+							<div style="text-align:center">
+								<span>Table 1: Human-machine dialogue datasets. Starred (*) numbers are approximated based on the average number of words per utterance. Datasets marked with () indicate Wizard-of-Oz dialogues, where the machine is secretly operated by a human.</span>
+							</div><span><a id="tab:hc"></a></span>
+						</div>
+					</div>
+
+          <span><br>
+          <br>
+                <br> <h2><span>Human-Human Constrained Dialogue Datasets</span></h2></span>
+          <div style="text-align:center">
+		<div class="footnotesize">
+			<table border="1">
+				<tr>
+					<td align="left">Name</td>
+					<td align="left">Topics</td>
+					<td align="center">Total # of dialogues</td>
+					<td align="center">Total # of words</td>
+					<td align="center">Total length</td>
+					<td align="left">Description</td>
+				</tr>
+				<tr>
+					<td align="left">HCRC Map Task Corpus [<a class="tth_citation" href="./references.html#anderson1991hcrc" id="CITEanderson1991hcrc">Anderson et&nbsp;al., 1991</a>]</td>
+					<td align="left">Map-Reproducing Task</td>
+					<td align="center">128</td>
+					<td align="center">147k</td>
+					<td align="center">18hrs</td>
+					<td align="left">Dialogues from HLAP Task in which speakers must collaborate verbally to reproduce on one participant’s map a route printed on the other’s.</td>
+				</tr>
+				<tr>
+					<td align="left">The Walking Around Corpus [<a class="tth_citation" href="./references.html#brennan2013entrainment" id="CITEbrennan2013entrainment">Brennan et&nbsp;al., 2013</a>]</td>
+					<td align="left">Location Finding Task</td>
+					<td align="center">36</td>
+					<td align="center">300k*</td>
+					<td align="center">33hrs</td>
+					<td align="left">People collaborating over telephone to find certain locations.</td>
+				</tr>
+        <tr>
+					<td align="left">Green Persuasive Database [<a class="tth_citation" href="./references.html#douglas2007humaine" id="CITEdouglas2007humaine">Douglas-Cowie et&nbsp;al., 2007</a>]</td>
+					<td align="left">Lifestyle</td>
+					<td align="center">8</td>
+					<td align="center">35k*</td>
+					<td align="center">4hrs</td>
+					<td align="left">A persuader with (genuinely) strong pro-green feelings tries to convince persuadees to consider adopting more ‘green’ lifestyles.</td>
+				</tr>
+				<tr>
+					<td align="left">Intelligence Squared Debates [<a class="tth_citation" href="./references.html#zhang2016conversational" id="CITEzhang2016conversational">Zhang et&nbsp;al., 2016</a>]</td>
+					<td align="left">Debates</td>
+					<td align="center">108</td>
+					<td align="center">1.8M</td>
+					<td align="center">12.5K*</td>
+					<td align="left">Various topics in Oxford-style debates, each constrained to one subject. Audience opinions provided pre- and post-debates.</td>
+				</tr>
+				<tr>
+					<td align="left">The Corpus of Professional Spoken American English [<a class="tth_citation" href="./references.html#barlow2000corpus" id="CITEbarlow2000corpus">Barlow, 2000</a>]</td>
+					<td align="left">Politics, Education</td>
+					<td align="center">200</td>
+					<td align="center">2M</td>
+					<td align="center">220hrs*</td>
+					<td align="left">Interactions from faculty meetings and White House press conferences.</td>
+				</tr>
+				<tr>
+					<td align="left">MAHNOB Mimicry Database [<a class="tth_citation" href="./references.html#sun2011multimodal" id="CITEsun2011multimodal">Sun et&nbsp;al., 2011</a>]</td>
+					<td align="left">Politics, Games</td>
+					<td align="center">54</td>
+					<td align="center">100k*</td>
+					<td align="center">11hrs</td>
+					<td align="left">Two experiments: a discussion on a political topic, and a role-playing game.</td>
+				</tr>
+				<tr>
+					<td align="left">The IDIAP Wolf Corpus [<a class="tth_citation" href="./references.html#hung2010idiap" id="CITEhung2010idiap">Hung and Chittaranjan, 2010</a>]</td>
+					<td align="left">Role-Playing Game</td>
+					<td align="center">15</td>
+					<td align="center">60k*</td>
+					<td align="center">7hrs</td>
+					<td align="left">A recording of Werewolf role-playing game with annotations related to game progress.</td>
+				</tr>
+				<tr>
+					<td align="left">SEMAINE corpus [<a class="tth_citation" href="./references.html#mckeown2010semaine" id="CITEmckeown2010semaine">McKeown et&nbsp;al., 2010</a>]</td>
+					<td align="left">Emotional Conversations</td>
+					<td align="center">100</td>
+					<td align="center">450k*</td>
+					<td align="center">50hrs</td>
+					<td align="left">Users were recorded while holding conversations with an operator who adopts roles designed to evoke emotional reactions.</td>
+				</tr>
+				<tr>
+					<td align="left">DSTC4/DSTC5 Corpora [<a class="tth_citeref" href="./references.html#kim2015dialog">Kim et&nbsp;al., 2015</a>,<a class="tth_citation" href="./references.html#kim2016fifth" id="CITEkim2016fifth">Kim et&nbsp;al., 2016</a>]</td>
+					<td align="left">Tourist</td>
+					<td align="center">35</td>
+					<td align="center">273k</td>
+					<td align="center">21hrs</td>
+					<td align="left">Tourist information exchange over Skype.</td>
+				</tr>
+				<tr>
+					<td align="left">Loqui Dialogue Corpus [<a class="tth_citation" href="./references.html#passonneau2014loqui" id="CITEpassonneau2014loqui">Passonneau and Sachar, 2014</a>]</td>
+					<td align="left">Library Inquiries</td>
+					<td align="center">82</td>
+					<td align="center">21K</td>
+					<td align="center">140*</td>
+					<td align="left">Telephone interactions between librarians and patrons. Annotated dialogue acts, discussion topics, frames (discourse units), question-answer pairs.</td>
+				</tr>
+				<tr>
+					<td align="left">MRDA Corpus [<a class="tth_citation" href="./references.html#shriberg2004icsi" id="CITEshriberg2004icsi">Shriberg et&nbsp;al., 2004</a>]</td>
+					<td align="left">ICSI Meetings</td>
+					<td align="center">75</td>
+					<td align="center">11K*</td>
+					<td align="center">72hrs</td>
+					<td align="left">Recordings of ICSI meetings. Topics include: ICSI meeting recorder project itself, automatic speech recognition, natural language processing and neural theories of language. Dialogue acts, question-answer pairs, and hot spots.</td>
+				</tr>
+				<tr>
+					<td align="left">TRAINS 93 Dialogues Corpus [<a class="tth_citation" href="./references.html#heeman1995trains" id="CITEheeman1995trains">Heeman and Allen, 1995</a>]</td>
+					<td align="left">Railroad Freight Route Planning</td>
+					<td align="center">98</td>
+					<td align="center">55K</td>
+					<td align="center">6.5hrs</td>
+					<td align="left">Collaborative planning of railroad freight routes.</td>
+				</tr>
+			</table>
+			<div style="text-align:center">
+				Table 2: Human-human constrained spoken dialogue datasets. Starred (*) numbers are estimates based on the average rate of English speech from the National Center for Voice and Speech (<span class="small"><a href="www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html"><tt>www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html</tt></a>).</span>
+			</div><a id="tab:hh_constrained_spoken"></a>
+		</div>
+	</div>
+
+  <span><br>
+  <br>
+        <br> <h2><span>Human-Human Spontaneous Dialogue Datasets</span></h2></span>
+  <div style="text-align:center">
+  		<div class="footnotesize">
+  			<table border="1">
+  				<tr>
+  					<td align="left">Name</td>
+  					<td align="left">Topics</td>
+  					<td align="center">Total # of dialogues</td>
+  					<td align="center">Total # of words</td>
+  					<td align="center">Total length</td>
+  					<td align="left">Description</td>
+  				</tr>
+  				<tr>
+  					<td align="left">
+  						Switchboard [<a class="tth_citation" href="./references.html#godfrey1992switchboard" id="CITEgodfrey1992switchboard">Godfrey et&nbsp;al., 1992</a>]
+  					</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">2,400</td>
+  					<td align="center">3M</td>
+  					<td align="center">300hrs*</td>
+  					<td align="left">Telephone conversations on pre-specified topics</td>
+  				</tr>
+  				<tr>
+  					<td align="left">British National Corpus (BNC) [<a class="tth_citation" href="./references.html#leech1992100" id="CITEleech1992100">Leech, 1992</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">854</td>
+  					<td align="center">10M</td>
+  					<td align="center">1,000hrs*</td>
+  					<td align="left">British dialogues many contexts, from formal business or government meetings to radio shows and phone-ins.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">CALLHOME American English Speech [<a class="tth_citation" href="./references.html#canavan1997callhome" id="CITEcanavan1997callhome">Canavan et&nbsp;al., 1997</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">120</td>
+  					<td align="center">540k*</td>
+  					<td align="center">60hrs</td>
+  					<td align="left">Telephone conversations between family members or close friends.</td>
+  				</tr>
+
+  				<tr>
+  					<td align="left">CALLFRIEND American English Non-Southern Dialect [<a class="tth_citation" href="./references.html#canavan1996callfriend" id="CITEcanavan1996callfriend">Canavan and Zipperlen, 1996</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">60</td>
+  					<td align="center">180k*</td>
+  					<td align="center">20hrs</td>
+  					<td align="left">Telephone conversations between Americans with a Southern accent.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Bergen Corpus of London Teenage Language [<a class="tth_citation" href="./references.html#haslerud1995bergen" id="CITEhaslerud1995bergen">Haslerud and Stenstr&#246;m, 1995</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">100</td>
+  					<td align="center">500k</td>
+  					<td align="center">55hrs</td>
+  					<td align="left">Spontaneous teenage talk recorded in 1993. Conversations were recorded secretly.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Cambridge and Nottingham Corpus of Discourse in English [<a class="tth_citation" href="./references.html#mccarthy1998spoken" id="CITEmccarthy1998spoken">McCarthy, 1998</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">-</td>
+  					<td align="center">5M</td>
+  					<td align="center">550hrs*</td>
+  					<td align="left">British dialogues from wide variety of informal contexts, such as hair salons, restaurants, etc.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">D64 Multimodal Conversation Corpus [<a class="tth_citation" href="./references.html#oertel2013d64" id="CITEoertel2013d64">Oertel et&nbsp;al., 2013</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">2</td>
+  					<td align="center">70k*</td>
+  					<td align="center">8hrs</td>
+  					<td align="left">Several hours of natural interaction between a group of people</td>
+  				</tr>
+  				<tr>
+  					<td align="left">AMI Meeting Corpus [<a class="tth_citation" href="./references.html#renals2007recognition" id="CITErenals2007recognition">Renals et&nbsp;al., 2007</a>]</td>
+  					<td align="left">Meetings</td>
+  					<td align="center">175</td>
+  					<td align="center">900k*</td>
+  					<td align="center">100hrs</td>
+  					<td align="left">Face-to-face meeting recordings.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">Cardiff Conversation Database (CCDb) [<a class="tth_citation" href="./references.html#aubrey2013cardiff" id="CITEaubrey2013cardiff">Aubrey et&nbsp;al., 2013</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">30</td>
+  					<td align="center">20k*</td>
+  					<td align="center">150min</td>
+  					<td align="left">Audio-visual database with unscripted natural conversations, including visual annotations.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">4D Cardiff Conversation Database (4D CCDb) [<a class="tth_citation" href="./references.html#vandeventer20154d" id="CITEvandeventer20154d">Vandeventer et&nbsp;al., 2015</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">17</td>
+  					<td align="center">2.5k*</td>
+  					<td align="center">17min</td>
+  					<td align="left">A version of the CCDb with 3D video</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Diachronic Corpus of Present-Day Spoken English [<a class="tth_citation" href="./references.html#aarts2006diachronic" id="CITEaarts2006diachronic">Aarts and Wallis, 2006</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">280</td>
+  					<td align="center">800k</td>
+  					<td align="center">80hrs*</td>
+  					<td align="left">Selection of face-to-face, telephone, and public discussion dialogue from Britain.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Spoken Corpus of the Survey of English Dialects [<a class="tth_citation" href="./references.html#beare1999spoken" id="CITEbeare1999spoken">Beare and Scott, 1999</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">314</td>
+  					<td align="center">800k</td>
+  					<td align="center">60hrs</td>
+  					<td align="left">Dialogue of people aged 60 or above talking about their memories, families, work and the folklore of the countryside from a century ago.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Child Language Data Exchange System [<a class="tth_citation" href="./references.html#macwhinney1985child" id="CITEmacwhinney1985child">MacWhinney and Snow, 1985</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">11K</td>
+  					<td align="center">10M</td>
+  					<td align="center">1,000hrs*</td>
+  					<td align="left">International database organized for the study of first and second language acquisition.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">The Charlotte Narrative and Conversation Collection (CNCC) [<a class="tth_citation" href="./references.html#reppen2004american" id="CITEreppen2004american">Reppen and Ide, 2004</a>]</td>
+  					<td align="left">Casual Topics</td>
+  					<td align="center">95</td>
+  					<td align="center">20K</td>
+  					<td align="center">2hrs*</td>
+  					<td align="left">Narratives, conversations and interviews representative of the residents of Mecklenburg County, North Carolina.</td>
+  				</tr>
+  				<tr>
+  					<td align="left">Verbmobil Corpus [<a class="tth_citation" href="./references.html#weilhammer2002multi" id="CITEweilhammer2002multi">Burger et&nbsp;al., 2000</a>]</td>
+  					<td align="left">Unrestricted</td>
+  					<td align="center">726</td>
+  					<td align="center">270K</td>
+  					<td align="center">38Hrs</td>
+  					<td align="left">Spontaneous speech data collected for the Verbmobil project. Full corpus is in English, German, and Japanese. We only show English statistics.</td>
+  				</tr>
+  			</table>
+  			<div style="text-align:center">
+  				Table 3: Human-human spontaneous spoken dialogue datasets. Starred (*) numbers are estimates based on the average rate of English speech from the National Center for Voice and Speech (<span class="small"><a href="www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html"><tt>www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html</tt></a>)</span>
+  			</div><a id="tab:hh_spontaneous_spoken"></a>
+  		</div>
+  	</div>
+
+    <span><br>
+    <br>
+          <br> <h2><span>Human-Human Scripted Dialogue Datasets</span></h2></span>
+    <div style="text-align:center">
+  <div class="footnotesize">
+    <table border="1">
+      <tr>
+        <td align="left">Name</td>
+        <td align="left">Topics</td>
+        <td align="center">Total # of utterances</td>
+        <td align="center">Total # of dialogues</td>
+        <td align="center">Total # of works</td>
+        <td align="center">Total # of words</td>
+        <td align="left">Description</td>
+      </tr>
+      <tr>
+        <td align="left">Movie-DiC [<a class="tth_citation" href="./references.html#banchs2012movie" id="CITEbanchs2012movie">Banchs, 2012</a>]</td>
+        <td align="left">Movie dialogues</td>
+        <td align="center">764k</td>
+        <td align="center">132,229</td>
+        <td align="center">753</td>
+        <td align="center">6M</td>
+        <td align="left">Movie scripts of American films.</td>
+      </tr>
+      <tr>
+        <td align="left">Movie-Triples [<a class="tth_citeref" href="./references.html#2015arXiv150704808S">Serban et&nbsp;al., 2016</a>]</td>
+        <td align="left">Movie dialogues</td>
+        <td align="center">736k</td>
+        <td align="center">245,296</td>
+        <td align="center">614</td>
+        <td align="center">13M</td>
+        <td align="left">Triples of utterances which are filtered to come from X-Y-X triples.</td>
+      </tr>
+      <tr>
+        <td align="left">Film Scripts Online Series</td>
+        <td align="left">Movie scripts</td>
+        <td align="center">1M*</td>
+        <td align="center">263K</td>
+        <td align="center">1,500</td>
+        <td align="center">16M*</td>
+        <td align="left">Two subsets of scripts (1000 American films and 500 mixed British/American films).</td>
+      </tr>
+      <tr>
+        <td align="left">Cornell Movie-Dialogue Corpus [<a class="tth_citation" href="./references.html#Danescu-Niculescu-Mizil+Lee:11a" id="CITEDanescu-Niculescu-Mizil+Lee:11a">Danescu-Niculescu-Mizil and Lee, 2011</a>]</td>
+        <td align="left">Movie dialogues</td>
+        <td align="center">305K</td>
+        <td align="center">220,579</td>
+        <td align="center">617</td>
+        <td align="center">9M*</td>
+        <td align="left">Short conversations from film scripts, annotated with character metadata.</td>
+      </tr>
+      <tr>
+        <td align="left">Filtered Movie Script Corpus [<a class="tth_citation" href="./references.html#nio2014conversation" id="CITEnio2014conversation">Nio et&nbsp;al., 2014</a>]</td>
+        <td align="left">Movie dialogues</td>
+        <td align="center">173k</td>
+        <td align="center">86,719</td>
+        <td align="center">1,786</td>
+        <td align="center">2M*</td>
+        <td align="left">Triples of utterances which are filtered to come from X-Y-X triples.</td>
+      </tr>
+      <tr>
+        <td align="left">American Soap Opera Corpus [<a class="tth_citation" href="./references.html#davies2012corpus" id="CITEdavies2012corpus">Davies, 2012b</a>]</td>
+        <td align="left">TV show scripts</td>
+        <td align="center">10M*</td>
+        <td align="center">1.2M</td>
+        <td align="center">22,000</td>
+        <td align="center">100M</td>
+        <td align="left">Transcripts of American soap operas.</td>
+      </tr>
+      <tr>
+        <td align="left">TVD Corpus [<a class="tth_citation" href="./references.html#roy2014tvd" id="CITEroy2014tvd">Roy et&nbsp;al., 2014</a>]</td>
+        <td align="left">TV show scripts</td>
+        <td align="center">60k*</td>
+        <td align="center">10K</td>
+        <td align="center">191</td>
+        <td align="center">600k*</td>
+        <td align="left">TV scripts from a comedy (Big Bang Theory) and drama (Game of Thrones) show.</td>
+      </tr>
+      <tr>
+        <td align="left">Character Style from Film Corpus [<a class="tth_citation" href="./references.html#walker2012annotated" id="CITEwalker2012annotated">Walker et&nbsp;al., 2012a</a>]</td>
+        <td align="left">Movie scripts</td>
+        <td align="center">664k</td>
+        <td align="center">151K</td>
+        <td align="center">862</td>
+        <td align="center">9.6M</td>
+        <td align="left">Scripts from IMSDb, annotated for linguistic structures and character archetypes.</td>
+      </tr>
+      <tr>
+        <td align="left">SubTle Corpus [<a class="tth_citation" href="./references.html#ameixa2013subtitles" id="CITEameixa2013subtitles">Ameixa and Coheur, 2013</a>]</td>
+        <td align="left">Movie subtitles</td>
+        <td align="center">6.7M</td>
+        <td align="center">3.35M</td>
+        <td align="center">6,184</td>
+        <td align="center">20M</td>
+        <td align="left">Aligned interaction-response pairs from movie subtitles.</td>
+      </tr>
+      <tr>
+        <td align="left">OpenSubtitles [<a class="tth_citation" href="./references.html#tiedemann2012parallel" id="CITEtiedemann2012parallel">Tiedemann, 2012</a>]</td>
+        <td align="left">Movie subtitles</td>
+        <td align="center">140M*</td>
+        <td align="center">36M</td>
+        <td align="center">207,907</td>
+        <td align="center">1B</td>
+        <td align="left">Movie subtitles which are not speaker-aligned.</td>
+      </tr>
+      <tr>
+        <td align="left">CED (1560-1760) Corpus [<a class="tth_citation" href="./references.html#kyto2006guide" id="CITEkyto2006guide">Kyt&#246; and Walker, 2006</a>]</td>
+        <td align="left">Written Works &amp; Trial Proceedings</td>
+        <td align="center">-</td>
+        <td align="center">-</td>
+        <td align="center">177</td>
+        <td align="center">1.2M</td>
+        <td align="left">Various scripted fictional works from (1560-1760) as well as court trial proceedings.</td>
+      </tr>
+    </table>
+    <div style="text-align:center">
+      Table 4: Human-human scripted dialogue datasets. Quantities denoted with () indicate estimates based on average dialogues per movie seen in [<a class="tth_citeref" href="./references.html#banchs2012movie">Banchs, 2012</a>] and the number of scripts or works. Dialogues may not be explicitly separated in these datasets. TV show datasets were adjusted based on the ratio of average film runtime (112 minutes) to average TV show runtime (36 minutes). This data was scraped from the IMBD database (<span class="small"><a href="http://www.imdb.com/interfaces"><tt>http://www.imdb.com/interfaces</tt></a>). ( Starred (*) quantities are estimated based on the average number of words and utterances per film, and the average lengths of films and TV shows. Estimates derived from the Tameri Guide for Writers (<span class="small"><a href="http://www.tameri.com/format/wordcounts.html"><tt>http://www.tameri.com/format/wordcounts.html</tt></a>).</span></span>
+    </div><a id="tab:hh_scripted"></a>
+  </div>
+</div>
+<span><br>
+<br>
+      <br> <h2><span>Human-Human Spontaneous Dialogue Datasets</span></h2></span>
+<div style="text-align:center">
+  <div class="footnotesize">
+    <table border="1">
+      <tr>
+        <td align="left">Name</td>
+        <td align="left">Type</td>
+        <td align="left">Topics</td>
+        <td align="center">Avg. # of turns</td>
+        <td align="center">Total # of dialogues</td>
+        <td align="center">Total # of words</td>
+        <td align="left">Description</td>
+      </tr>
+      <tr>
+        <td align="left">NPS Chat Corpus [<a class="tth_citation" href="./references.html#forsyth2007lexical" id="CITEforsyth2007lexical">Forsyth and Martell, 2007</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">&nbsp;704</td>
+        <td align="center">15</td>
+        <td align="center">100M</td>
+        <td align="left">Posts from age-specific online chat rooms.</td>
+      </tr>
+      <tr>
+        <td align="left">Twitter Corpus [<a class="tth_citation" href="./references.html#Ritter:2010:UMT:1857999.1858019" id="CITERitter:2010:UMT:1857999.1858019">Ritter et&nbsp;al., 2010</a>]</td>
+        <td align="left">Microblog</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">2</td>
+        <td align="center">1,300,000</td>
+        <td align="center">&nbsp;125M</td>
+        <td align="left">Tweets and replies extracted from Twitter</td>
+      </tr>
+      <tr>
+        <td align="left">Twitter Triple Corpus [<a class="tth_citeref" href="./references.html#sordoni2015aneural">Sordoni et&nbsp;al., 2015</a>]</td>
+        <td align="left">Microblog</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">3</td>
+        <td align="center">4,232</td>
+        <td align="center">&nbsp;65K</td>
+        <td align="left">A-B-A triples extracted from Twitter</td>
+      </tr>
+
+      <tr>
+        <td align="left">UseNet Corpus [<a class="tth_citation" href="./references.html#shaoul2009usenet" id="CITEshaoul2009usenet">Shaoul and Westbury, 2009</a>]</td>
+        <td align="left">Microblog</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">&nbsp;687</td>
+        <td align="center">47860</td>
+        <td align="center">&nbsp;7B</td>
+        <td align="left">UseNet forum postings</td>
+      </tr>
+
+      <tr>
+        <td align="left">NUS SMS Corpus [<a class="tth_citation" href="./references.html#chen2013creating" id="CITEchen2013creating">Chen and Kan, 2013</a>]</td>
+        <td align="left">SMS messages</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">&nbsp;18</td>
+        <td align="center">&nbsp;3K</td>
+        <td align="center">580,668*<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup></td>
+        <td align="left">SMS messages collected between two users, with timing analysis.</td>
+      </tr>
+      <tr>
+        <td align="left">Reddit Domestic Abuse Corpus [<a class="tth_citation" href="./references.html#ray4183analysis" id="CITEray4183analysis">Schrading et&nbsp;al., 2015</a>]</td>
+        <td align="left">Forum</td>
+        <td align="left">Abuse help</td>
+        <td align="center">17.53</td>
+        <td align="center">21,133</td>
+        <td align="center">19M-103M <sup>\triangle</sup></td>
+        <td align="left">Reddit posts from either domestic abuse subreddits, or general chat.</td>
+      </tr>
+      <tr>
+        <td align="left">Settlers of Catan [<a class="tth_citation" href="./references.html#afantenos2012developing" id="CITEafantenos2012developing">Afantenos et&nbsp;al., 2012</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Game terms</td>
+        <td align="center">&nbsp;95</td>
+        <td align="center">21</td>
+        <td align="center">-</td>
+        <td align="left">Conversations between players in the game `Settlers of Catan'.</td>
+      </tr>
+      <tr>
+        <td align="left">Cards Corpus [<a class="tth_citation" href="./references.html#djalali2012corpus" id="CITEdjalali2012corpus">Djalali et&nbsp;al., 2012</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Game terms</td>
+        <td align="center">38.1</td>
+        <td align="center">1,266</td>
+        <td align="center">282K</td>
+        <td align="left">Conversations between players playing `Cards world'.</td>
+      </tr>
+      <tr>
+        <td align="left">Agreement in Wikipedia Talk Pages [<a class="tth_citation" href="./references.html#andreas2012annotating" id="CITEandreas2012annotating">Andreas et&nbsp;al., 2012</a>]</td>
+        <td align="left">Forum</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">2</td>
+        <td align="center">822</td>
+        <td align="center">110K</td>
+        <td align="left">LiveJournal and Wikipedia Discussions forum threads. Agreement type and level annotated.</td>
+      </tr>
+      <tr>
+        <td align="left">Agreement by Create Debaters [<a class="tth_citation" href="./references.html#rosenthal2015couldn" id="CITErosenthal2015couldn">Rosenthal and McKeown, 2015</a>]</td>
+        <td align="left">Forum</td>
+        <td align="left">Unrestricted</td>
+        <td align="center">2</td>
+        <td align="center">10K</td>
+        <td align="center">1.4M</td>
+        <td align="left">Create Debate forum conversations. Annotated what type of agreement (e.g. paraphrase) or disagreement.</td>
+      </tr>
+      <tr>
+        <td align="left">Internet Argument Corpus [<a class="tth_citation" href="./references.html#walker2012corpus" id="CITEwalker2012corpus">Walker et&nbsp;al., 2012b</a>]</td>
+        <td align="left">Forum</td>
+        <td align="left">Politics</td>
+        <td align="center">&nbsp;35.45</td>
+        <td align="center">&nbsp;11K</td>
+        <td align="center">&nbsp;73M</td>
+        <td align="left">Debates about specific political or moral positions.</td>
+      </tr>
+      <tr>
+        <td align="left">MPC Corpus [<a class="tth_citation" href="./references.html#shaikh2010mpc" id="CITEshaikh2010mpc">Shaikh et&nbsp;al., 2010</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Social tasks</td>
+        <td align="center">520</td>
+        <td align="center">14</td>
+        <td align="center">58K</td>
+        <td align="left">Conversations about general, political, and interview topics.</td>
+      </tr>
+      <tr>
+        <td align="left">Ubuntu Dialogue Corpus [<a class="tth_citeref" href="./references.html#lowe2015ubuntu">Lowe et&nbsp;al., 2015a</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Ubuntu Operating System</td>
+        <td align="center">7.71</td>
+        <td align="center">930,000</td>
+        <td align="center">100M</td>
+        <td align="left">Dialogues extracted from Ubuntu chat stream on IRC.</td>
+      </tr>
+      <tr>
+        <td align="left">Ubuntu Chat Corpus [<a class="tth_citation" href="./references.html#uthus2013ubuntu" id="CITEuthus2013ubuntu">Uthus and Aha, 2013</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Ubuntu Operating System</td>
+        <td align="center">&nbsp;3381.6</td>
+        <td align="center">10665</td>
+        <td align="center">&nbsp;2B*<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup></td>
+        <td align="left">Chat stream scraped from IRC logs (no dialogues extracted).</td>
+      </tr>
+      <tr>
+        <td align="left">Movie Dialog Dataset [<a class="tth_citeref" href="./references.html#dodge2015evaluating">Dodge et&nbsp;al., 2015</a>]</td>
+        <td align="left">Chat, QA &amp; Recommendation</td>
+        <td align="left">Movies</td>
+        <td align="center">&nbsp;3.3</td>
+        <td align="center">&nbsp;3.1M<sup>\blacktriangledown</sup></td>
+        <td align="center">&nbsp;185M</td>
+        <td align="left">For goal-driven dialogue systems. Includes movie metadata as knowledge triples.</td>
+      </tr>
+    </table>
+    <div style="text-align:center">
+      Table 5: <span class="small">Human-human written dialogue datasets. Starred (*) quantities are computed using word counts based on spaces (i.e. a word must be a sequence of characters preceded and followed by a space), but for certain corpora, such as IRC and SMS corpora, proper English words are sometimes concatenated together due to slang usage. Triangle (<sup>\triangle</sup>) indicates lower and upper bounds computed using average words per utterance estimated on a similar Reddit corpus <a class="tth_citation" href="./references.html#schrading2015analyzing" id="CITEschrading2015analyzing">Schrading [2015]</a>. Square (<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup>) indicates estimates based only on English part of the corpus. Note that 2.1M dialogues from the Movie Dialog dataset (<sup>\blacktriangledown</sup>) are in the form of simulated QA pairs. Dialogs indicated by () are contiguous blocks of recorded conversation in a multi-participant chat. In the case of UseNet, we note the total number of newsgroups and find the average turns as average number of posts collected per newsgroup. () indicates an estimate based on a Twitter dataset of similar size and refers to tokens as well as words.</span>
+    </div>
+  </div>
+</div>
+
+<span><br>
+<br>
+      <br> <h2><span>Acknowledgements</span></h2></span>
+      The authors gratefully acknowledge financial support by the Samsung Advanced Institute of Technology (SAIT), the Natural Sciences and Engineering Research Council of Canada (NSERC), the Canada Research Chairs, the Canadian Institute for Advanced Research (CIFAR) and Compute Canada. Early versions of the manuscript benefited greatly from the proofreading of Melanie Lyman-Abramovitch, and later versions were extensively revised by Genevieve Fried and Nicolas Angelard-Gontier. The authors also thank Nissan Pow, Michael Noseworthy, Chia-Wei Liu, Gabriel Forgues, Alessandro Sordoni, Yoshua Bengio and Aaron Courville for helpful discussions.
+
+				</section>
+			</section>
+			<footer>
+				<span></span>
+				<div id="mcgill_logo">
+					<span></span>
+					<p><span><a href="http://rl.cs.mcgill.ca/">Reasoning<br>
+					and Learning Lab</a></span></p><!-- <p><a href="http://www.cim.mcgill.ca">Center for Intelligent Machines</a></p> -->
+					<!-- <p><a href="http://www.mcgill.ca">McGill University</a></p> -->
+					<span><a href="http://www.mcgill.ca"><img src="mcgill_logo_big.png" style="padding-top: 15px;"></a></span>
+				</div><span></span>
+				<div id="ncfrn_logo">
+					<span></span>
+					<p><span><a href="http://diro.umontreal.ca/accueil/">Département d'informatique<br>
+					et de recherche opérationnelle</a></span></p><span><a href="http://umontreal.ca"><img src="Universite_de_Montreal_logo.svg"></a></span>
+				</div>
+
+        <!-- <div id="samsung_logo">
+          <span></span>
+          <p><span><a href="http://sait.samsung.com">Samsung Advanced Institute<br>of Technology</a></span></p><span><a href="http://www.sait.samsung.com/"><img src="samsung.png"></a></span>
+        </div><span>				 </span> -->
+			</footer><span></span>
+		</section>
+	</section>
+</body>
 </html>

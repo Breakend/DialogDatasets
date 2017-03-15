@@ -195,14 +195,14 @@ tr td:hover {
 	font-size: 11px;
 	text-transform: uppercase;
 }
-.sample#title ul li:before {
+/*.sample#title ul li:before {
 	content: "\00d7";
 	font-size: 15px;
 	font-weight: 700;
 	left: -2px;
 	position: relative;
 	top: 2px;
-}
+}*/
 .sample#title ul li a:hover {
 	color: #222;
 	font-weight: 700;
@@ -469,14 +469,14 @@ tr td:hover {
 	font-size: 11px;
 	text-transform: uppercase;
 }
-.sample#papertitle ul li:before {
+/*.sample#papertitle ul li:before {
 	content: "\00d7";
 	font-size: 15px;
 	font-weight: 700;
 	left: -2px;
 	position: relative;
 	top: 2px;
-}
+}*/
 .sample#papertitle ul li a:hover {
 	color: #222;
 	font-weight: 700;

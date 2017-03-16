@@ -43,6 +43,11 @@ table {
 /* Clear Floated Elements
 ------------------------------------------------------------------------------*/
 
+.dllink {
+	text-decoration: underline;
+	font-weight: 500;
+}
+
 .clearfix:after, .sample#postnormal .text:after {
 	clear: both;
 	content: ' ';
@@ -104,6 +109,8 @@ td, th {
 	/* No more visible border */
 	height: 30px;
 	transition: all 0.3s;
+	padding-bottom: 3px;
+	padding-top: 3px;
 	/* Simple transition for hover effect */
 }
 th {

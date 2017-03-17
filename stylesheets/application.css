@@ -27,6 +27,11 @@ body {
 ol, ul {
 	list-style: none;
 }
+
+a:hover {
+ color: #222;
+ font-weight: 700;
+}
 blockquote, q {
 	quotes: none;
 }

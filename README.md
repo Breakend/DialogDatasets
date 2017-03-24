@@ -1,40 +1,22 @@
 # DialogDatasets
-A repository linking to publicly available dialog datasets. Feel free to send pull requests.
+A repository linking to publicly available dialog datasets. Feel free to send issues or pull requests.
 
+Please see the gh-pages website to view tables of all our gathered corpora: https://breakend.github.io/DialogDatasets
 
-## Human-Machine Corpora
+This accompanies our paper: https://arxiv.org/abs/1512.05742
 
-**DSTC 1**
+If you find it helpful, please cite:
 
-Link to Download: https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/
+@ARTICLE{2015serbansurvey,
+   author = {{Vlad Serban}, I. and {Lowe}, R. and {Henderson}, P. and {Charlin}, L. and 
+	{Pineau}, J.},
+    title = "{A Survey of Available Corpora for Building Data-Driven Dialogue Systems}",
+  journal = {ArXiv e-prints},
+archivePrefix = "arXiv",
+   eprint = {1512.05742},
+ primaryClass = "cs.CL",
+ keywords = {Computer Science - Computation and Language, Computer Science - Artificial Intelligence, Computer Science - Human-Computer Interaction, Computer Science - Learning, Statistics - Machine Learning, 68T01, 68T05, 68T35, 68T50, I.2.6, I.2.7, I.2.1},
+     year = 2015,
+    month = dec
+}
 
-**DSTC 2&3** - Dialog State Tracking Challenge 2+3 corpora
-
-Link to Download: http://camdial.org/~mh521/dstc/
-
-
-## Human-Human Spontaneous Spoken Corpora
-
-**Cambridge Spoken American Corpus** - Subset of what is now Cambridge English Corpus.
-
-Link to Download (need to fill our request form): http://www.cambridge.org/us/cambridgeenglish/about-cambridge-english/cambridge-english-corpus
-
-**DSTC 4+5**
-
-Link to download (5) : http://workshop.colips.org/dstc5/
-
-Link to download (4) : http://www.colips.org/workshop/dstc4/
-
-**Loqui**
-
-Link to Download: https://academiccommons.columbia.edu/catalog/ac:176612
-
-**MRDA**
-
-Link to Download: http://www1.icsi.berkeley.edu/~ees/dadb/
-
-**Verbmobil**
-
-Stats: http://verbmobil.dfki.de/facts.html
-
-Link to download: https://www.phonetik.uni-muenchen.de/Bas/BasVM1eng.html

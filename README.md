@@ -7,6 +7,8 @@ This accompanies our paper: https://arxiv.org/abs/1512.05742
 
 If you find it helpful, please cite:
 
+
+<pre>
 @ARTICLE{2015serbansurvey,
    author = {{Vlad Serban}, I. and {Lowe}, R. and {Henderson}, P. and {Charlin}, L. and 
 	{Pineau}, J.},
@@ -19,4 +21,4 @@ archivePrefix = "arXiv",
      year = 2015,
     month = dec
 }
-
+</pre>

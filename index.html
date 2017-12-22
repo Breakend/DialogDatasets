@@ -1,85 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- modified from url=(0044)http://idl.cs.washington.edu/papers/tfgraph/ -->
+<html>
+
 <head>
-	<meta charset="utf-8">
-	<meta content="A showcase of the best typefaces from the Google web fonts directory." name="description">
-	<title>A Survey of Available Corpora for Building Data-Driven Dialogue Systems</title><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<link href="stylesheets/application.css" media="screen" rel='stylesheet' type="text/css">
-	<link href='https://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans:300,400,600,700,800|Gentium+Book+Basic:400,400italic|Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Gravitas+One|Lato:100,900|Old+Standard+TT:400,400italic|PT+Serif:400|PT+Sans+Narrow:700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=PT+Sans:700|Merriweather:400,900|Playfair+Display:400,900,700italic|Oswald:700|PT+Mono' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Cardo:400,400italic' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Libre+Baskerville' rel='stylesheet' type='text/css'>
-  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>A Survey of Available Corpora for Building Data-Driven Dialogue Systems</title>
+    <meta property="og:image" content="/static/images/logo/idl-logo.png">
+    <link rel="stylesheet" type="text/css" href="./tfthing_files/fonts.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<style type="text/css">
-	<
-	   td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
-	   td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
-	   td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
-	   td div.norm {line-height:normal;}
-	   span.roman {font-family: serif; font-style: normal; font-weight: normal;}
-	   span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
-	   span.overacc1 {position: relative;  left: .6em; top: -1.2ex;}
-	</style>
-	<style type="text/css">
-	   .tiny {font-size:30%;}
-	   .scriptsize {font-size:xx-small;}
-	   .footnotesize {font-size:x-small;}
-	   .smaller {font-size:smaller;}
-	   .small {font-size:small;}
-	   .normalsize {font-size:medium;}
-	   .large {font-size:large;}
-	   .larger {font-size:x-large;}
-	   .largerstill {font-size:xx-large;}
-	   .huge {font-size:300%;}
-	</style>
+    <link rel="stylesheet" type="text/css" href="./tfthing_files/main.css">
+    <style type="text/css">
+        :root #content > #center > .dose > .dosesingle,
+        :root #content > #right > .dose > .dosesingle {
+            display: none !important;
+        }
+    </style>
 </head>
-<body class="index">
-	<section id="container">
-		<section class="samples">
-			<section class="sample" id="papertitle">
-				<section class="text">
-					<div class="body">
-						<h1>A Survey of Available Corpora for Building Data-Driven Dialogue Systems</h1>
-						<hr>
-						<p>During the past decade, several areas of speech and language understanding have witnessed substantial breakthroughs from the use of data-driven models. In the area of dialogue systems, the trend is less obvious, and most practical systems are still built through significant engineering and expert knowledge. Nevertheless, several recent results suggest that data-driven approaches are feasible and quite promising. To facilitate research in this area, we have carried out a wide survey of publicly available datasets suitable for data-driven learning of dialogue systems. We discuss important characteristics of these datasets, how they can be used to learn diverse dialogue strategies, and their other potential uses. We also examine methods for transfer learning between datasets and the use of external knowledge. Finally, we discuss appropriate choice of evaluation metrics for the learning objective.
-						<span style="font-weight: 600;"><br/><br/>If you think there are any errors or missing datasets, please submit a pull request or issue to <a style="text-decoration: underline;" href="https://github.com/Breakend/DialogDatasets">the repository</a> for this site!<br/><br/></span></p>
-						<ul>
-							<li>
-								<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.iulianserban.com/">Iulian Vlad Serban</a>
-							</li>
-							<li>
-								<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://cs.mcgill.ca/~rlowe1/">Ryan Lowe</a>
-							</li>
-							<li>
-								<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://peterhenderson.co">Peter Henderson</a>
-							</li>
-							<li>
-								<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.cs.toronto.edu/~lcharlin/">Laurent Charlin</a>
-							</li>
-							<li>
-								<i class="fa fa-external-link" aria-hidden="true"></i> <a href="http://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a>
-							</li>
-							<span><a href="https://arxiv.org/abs/1512.05742">[ PDF ]</a>&nbsp;&nbsp;&nbsp;&nbsp;<!--a href="">BIBTEX</a></span--></span>
-						</ul><span></span>
-					</div>
-				</section>
-			</section>
 
-			<section class="sample" id="title">
-        <span><br><br/>
-  			<br></span>
-				<span></span>
-				<section class="text">
-					<span><br>
-					<br>
-					<br>
-					<br>
-					<br>
-					<br> <h2><span>Human-Machine Dialogue Datasets</span></h2></span>
+<body>
+    <div class="gutter">
+        Associated Links
+        <div class="nav">
+          <br>
+            <a href="http://rl.cs.mcgill.ca/index.html" class="at">RLLAB</a>
+            <br>
+            <a href="http://diro.umontreal.ca/accueil/" class="at">IRO</a>
+            <br>
+            <a href="http://www.iulianserban.com/">Iulian Vlad Serban</a>
+            <br>
+            <a href="http://cs.mcgill.ca/~rlowe1/">Ryan Lowe</a>
+            <br>
+            <a href="http://peterhenderson.co">Peter Henderson</a>
+            <br>
+            <a href="http://www.cs.toronto.edu/~lcharlin/">Laurent Charlin</a>
+            <br>
+            <a href="http://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a>
+        </div>
+        <div class="orgs">
+          <a href="https://umontreal.ca"><img width="150px" src="tfthing_files/udem.png"> </a>
+          <a href="https://mcgill.ca"><img width="150px" src="tfthing_files/mcgill_logo_big.png"> </a>
+          <a href="http://www.sait.samsung.com/"><img width="150px" src="tfthing_files/sait.png"> </a>
+          <a href="http://www.nserc-crsng.gc.ca/index_eng.asp"><img width="150px" src="tfthing_files/nserc.png"></a>
+          <a href="http://www.cifar.ca/"><img width="150px" src="tfthing_files/cifar.jpg"></a>
+        </div>
+    </div>
+    <div id="main">
+        <div class="header">
+            <div class="mark">
+                <span class="mcgill">McGill</span>
+                <span class="mark-i">&</span>
+                <span class="mark-d" style="color: blue">UdeM</span>
+            </div>
+            <div id="title">Papers</div>
+        </div>
+        <div id="content">
+            <div class="article">
+                <div class="pub">
+                    <div class="title">
+                      A Survey of Available Corpora for Building Data-Driven Dialogue Systems
+                    </div>
+                    <div class="authors">
 
-					<div style="text-align:center">
+                    <span class="author"><a href="http://www.iulianserban.com/">Iulian Vlad Serban,</a></span>
+                    <span class="author"><a href="http://cs.mcgill.ca/~rlowe1/">Ryan Lowe,</a></span>
+                    <span class="author"><a href="http://peterhenderson.co">Peter Henderson,</a></span>
+                    <span class="author"><a href="http://www.cs.toronto.edu/~lcharlin/">Laurent Charlin,</a></span>
+                    <span class="author"><a href="http://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a></span>
+
+                    </div>
+                    <div class="alert alert-success fade in">
+                      <strong>Call for contributions!</strong> We're always looking for more datasets. Feel free to <a href="https://github.com/Breakend/DialogDatasets">send us a pull request!</a>
+                    </div>
+                    <div class="figure">
+                      <img width="50%" src="./tfthing_files/splash_image.png">
+                        <br>
+                        <div class="caption">A basic outline of a dialog system.</div>
+                    </div>
+                    <div class="abstract">
+                        <div class="heading">Abstract</div>
+                        <div class="text">
+                          During the past decade, several areas of speech and language understanding have witnessed substantial breakthroughs from the use of data-driven models. In the area of dialogue systems, the trend is less obvious, and most practical systems are still built through significant engineering and expert knowledge. Nevertheless, several recent results suggest that data-driven approaches are feasible and quite promising. To facilitate research in this area, we have carried out a wide survey of publicly available datasets suitable for data-driven learning of dialogue systems. We discuss important characteristics of these datasets, how they can be used to learn diverse dialogue strategies, and their other potential uses. We also examine methods for transfer learning between datasets and the use of external knowledge. Finally, we discuss appropriate choice of evaluation metrics for the learning objective.
+                          </div>
+                    </div>
+                    <div class="materials">
+                        <div class="heading">Materials</div>
+                        <div class="links">
+                          <a href="https://arxiv.org/abs/1512.05742" class="link at">[ PDF ]</a>
+
+                          <a class="link at" href="https://raw.githubusercontent.com/Breakend/about-me/master/_bibliography/singles/survey.bib">[ BibTeX ]</a>
+
+                          <a class="link at" href="https://github.com/Breakend/DialogDatasets">[ Website Code ]</a>
+
+                          </div>
+                    </div>
+                    <div class="citation">
+                      <div class="heading">Acknowledgements</div>
+                      The authors gratefully acknowledge financial support by the <b>Samsung Advanced Institute of Technology (SAIT)</b>, the <b>Natural Sciences and Engineering Research Council of Canada (NSERC)</b>, the <b>Canada Research Chairs</b>, the <b>Canadian Institute for Advanced Research (CIFAR)</b> and <b>Compute Canada</b>. Early versions of the manuscript benefited greatly from the proofreading of Melanie Lyman-Abramovitch, and later versions were extensively revised by Genevieve Fried and Nicolas Angelard-Gontier. The authors also thank Nissan Pow, Michael Noseworthy, Chia-Wei Liu, Gabriel Forgues, Alessandro Sordoni, Yoshua Bengio and Aaron Courville for helpful discussions.
+                    </div>
+                    <div class="citation">
+                        <div class="heading">Citation</div>
+                        <div class="paper">
+                            <div class="thumbnail">
+                                <img width="150px" style="padding-right: 5px;" src="./tfthing_files/citation_thumb.png">
+                            </div>
+                            <div class="entry" style="padding-top: 10px;">
+                                <div class="title">
+                                  <a href="https://arxiv.org/abs/1512.05742" class="at">A Survey of Available Corpora for Building Data-Driven Dialogue Systems</a>
+                                </div>
+                                <div class="authors">
+                                  <span class="author"><a href="http://www.iulianserban.com/">Iulian Vlad Serban,</a></span>
+                                  <span class="author"><a href="http://cs.mcgill.ca/~rlowe1/">Ryan Lowe,</a></span>
+                                  <span class="author"><a href="http://peterhenderson.co">Peter Henderson,</a></span>
+                                  <span class="author"><a href="http://www.cs.toronto.edu/~lcharlin/">Laurent Charlin,</a></span>
+                                  <span class="author"><a href="http://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a></span>
+                                </div>
+                                <div class="venue"><span class="journal">ArXiv</span>, <span class="year">2017</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                      <div class="heading">Dataset Statistics</div>
+                      <div class="paper tables">
+
+					<br> <div class="header"><span>Human-Machine Dialogue Datasets</span></div></span>
+
+					<div style="text-align:left; font-size: 14px;">
 
 						<span></span>
 						<div class="footnotesize">
@@ -91,7 +137,7 @@
 									<td align="left">Topics</td>
 									<td align="center">Avg. # of turns</td>
 									<td align="center">Total # of dialogues</td>
-									<td align="center">Total # of words</td>
+									<td align="center" style="width: 5%;">Total # of words</td>
 									<td align="left">Description</td>
 									<td align="left">Links</td>
 								</tr>
@@ -197,7 +243,7 @@
 									<td align="left"><a class="dllink" href="https://datasets.maluuba.com/Frames">Info and Download</a></td>
 								</tr>
 							</table>
-							<div style="text-align:center">
+							<div style="text-align:left; font-size: 14px;">
 								<span>Table 1: Human-machine dialogue datasets. Starred (*) numbers are approximated based on the average number of words per utterance.</span>
 							</div><span><a id="tab:hc"></a></span>
 						</div>
@@ -205,15 +251,15 @@
 
           <span><br>
           <br>
-                <br> <h2><span>Human-Human Constrained Dialogue Datasets</span></h2></span>
-          <div style="text-align:center">
+                <br> <div class="header"><span>Human-Human Constrained Dialogue Datasets</span></div></span>
+          <div style="text-align:left; font-size: 14px;">
 		<div class="footnotesize">
 			<table border="1">
 				<tr>
 					<td align="left">Name</td>
 					<td align="left">Topics</td>
 					<td align="center">Total # of dialogues</td>
-					<td align="center">Total # of words</td>
+					<td align="center" style="width: 5%;">Total # of words</td>
 					<td align="center">Total length</td>
 					<td align="left">Description</td>
 					<td align="left">Links</td>
@@ -345,7 +391,7 @@
 					<td align="left"><a class="dllink" href="http://rapport.ict.usc.edu/">Info and Download</a></td>
 				</tr>
 			</table>
-			<div style="text-align:center">
+			<div style="text-align:left; font-size: 14px;">
 				Table 2: Human-human constrained spoken dialogue datasets. Starred (*) numbers are estimates based on the <a style="text-decoration: underline;" href="www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html">average rate of English speech from the National Center for Voice and Speech</a>.</span>
 			</div><a id="tab:hh_constrained_spoken"></a>
 		</div>
@@ -353,15 +399,15 @@
 
   <span><br>
   <br>
-        <br> <h2><span>Human-Human Spontaneous Dialogue Datasets</span></h2></span>
-  <div style="text-align:center">
+        <br> <div class="header"><span>Human-Human Spontaneous Dialogue Datasets</span></div></span>
+  <div style="text-align:left; font-size: 14px;">
   		<div class="footnotesize">
   			<table border="1">
   				<tr>
   					<td align="left">Name</td>
   					<td align="left">Topics</td>
   					<td align="center">Total # of dialogues</td>
-  					<td align="center">Total # of words</td>
+  					<td align="center" style="width: 5%;">Total # of words</td>
   					<td align="center">Total length</td>
   					<td align="left">Description</td>
 						<td align="left">Links</td>
@@ -497,7 +543,7 @@
 						<td align="left"><a class="dllink" href="http://nsv.uncc.edu/nsv/narratives/">Info and Download</a></td>
   				</tr>
   			</table>
-  			<div style="text-align:center">
+  			<div style="text-align:left; font-size: 14px;">
   				Table 3: Human-human spontaneous spoken dialogue datasets. Starred (*) numbers are estimates based on the <a style="text-decoration: underline;" href="www.ncvs.org/ncvs/tutorials/voiceprod/tutorial/quality.html">average rate of English speech from the National Center for Voice and Speech</a>.</span>
   			</div><a id="tab:hh_spontaneous_spoken"></a>
   		</div>
@@ -505,8 +551,8 @@
 
     <span><br>
     <br>
-          <br> <h2><span>Human-Human Scripted Dialogue Datasets</span></h2></span>
-    <div style="text-align:center">
+          <br> <div class="header"><span>Human-Human Scripted Dialogue Datasets</span></div></span>
+    <div style="text-align:left; font-size: 14px;">
   <div class="footnotesize">
     <table border="1">
       <tr>
@@ -515,7 +561,7 @@
         <td align="center">Total # of utterances</td>
         <td align="center">Total # of dialogues</td>
         <td align="center">Total # of works</td>
-        <td align="center">Total # of words</td>
+        <td align="center" style="width: 5%;">Total # of words</td>
 				<td align="left">Description</td>
 				<td align="left">Links</td>
       </tr>
@@ -630,15 +676,15 @@
 				<td align="left"><a class="dllink" href="http://www.engelska.uu.se/forskning/engelska-spraket/elektroniska-resurser/a-corpus">Info and Download</a></td>
       </tr>
     </table>
-    <div style="text-align:center">
+    <div style="text-align:left; font-size: 14px;">
       Table 4: Human-human scripted dialogue datasets. Quantities denoted with () indicate estimates based on average dialogues per movie seen in [<a class="tth_citeref" href="./references.html#banchs2012movie">Banchs, 2012</a>] and the number of scripts or works. Dialogues may not be explicitly separated in these datasets. TV show datasets were adjusted based on the ratio of average film runtime (112 minutes) to average TV show runtime (36 minutes). This data was scraped from the IMBD database (<span class="small"><a href="http://www.imdb.com/interfaces"><tt>http://www.imdb.com/interfaces</tt></a>). ( Starred (*) quantities are estimated based on the average number of words and utterances per film, and the average lengths of films and TV shows. Estimates derived from the Tameri Guide for Writers (<span class="small"><a href="http://www.tameri.com/format/wordcounts.html"><tt>http://www.tameri.com/format/wordcounts.html</tt></a>).</span></span>
     </div><a id="tab:hh_scripted"></a>
   </div>
 </div>
 <span><br>
 <br>
-      <br> <h2><span>Human-Human Written Dialogue Datasets</span></h2></span>
-<div style="text-align:center">
+      <br> <div class="header"><span>Human-Human Written Dialogue Datasets</span></div></span>
+<div style="text-align:left; font-size: 14px;">
   <div class="footnotesize">
     <table border="1">
       <tr>
@@ -647,7 +693,7 @@
         <td align="left">Topics</td>
         <td align="center">Avg. # of turns</td>
         <td align="center">Total # of dialogues</td>
-        <td align="center">Total # of words</td>
+        <td align="center" style="width: 5%;">Total # of words</td>
 				<td align="left">Description</td>
 				<td align="left">Links</td>
       </tr>
@@ -770,8 +816,8 @@
         <td align="center">&nbsp;35.45</td>
         <td align="center">&nbsp;11K</td>
         <td align="center">&nbsp;73M</td>
-        <td align="left">Debates about specific political or moral positions.</td>
-				<td align="left"><a class="dllink" href="https://nlds.soe.ucsc.edu/iac2">Info and Download</a></td>
+        <td align="left">Debates about specific political or moral positions. A separate corpus (Argumentative Summary Corpus, [<a class="tth_citation" href="./references.html#misra2015argsummary" id="CITEmisra2015argsummary">Walker et&nbsp;al., 2012b</a>]) annotates a subset of this corpus with summaries of the arguments.</td>
+				<td align="left"><a class="dllink" href="https://nlds.soe.ucsc.edu/iac2">Info and Download</a><br/><a class="dllink" href="https://nlds.soe.ucsc.edu/node/30">Argument Summary Corpus</a></td>
       </tr>
       <tr>
         <td align="left">MPC Corpus [<a class="tth_citation" href="./references.html#shaikh2010mpc" id="CITEshaikh2010mpc">Shaikh et&nbsp;al., 2010</a>]</td>
@@ -813,41 +859,36 @@
         <td align="left">For goal-driven dialogue systems. Includes movie metadata as knowledge triples.</td>
 				<td align="left"><a class="dllink" href="https://research.fb.com/downloads/babi/">Info and Download</a></td>
       </tr>
+      <tr>
+        <td align="left">DailyDialog Dataset [<a class="tth_citeref" href="./references.html#li2017daily">Li et&nbsp;al., 2017</a>]</td>
+        <td align="left">Chat</td>
+        <td align="left">Daily Life</td>
+        <td align="center">&nbsp;7.9</td>
+        <td align="center">&nbsp;13K</td>
+        <td align="center">&nbsp;1.5M</td>
+        <td align="left">Conversations extracted from English language educational texts. Labeled with emotions.</td>
+        <td align="left"><a class="dllink" href="http://yanran.li/dailydialog">Info and Download</a></td>
+      </tr>
     </table>
-    <div style="text-align:center">
+    <div style="text-align:left; font-size: 14px;">
       Table 5: <span class="small">Human-human written dialogue datasets. Starred (*) quantities are computed using word counts based on spaces (i.e. a word must be a sequence of characters preceded and followed by a space), but for certain corpora, such as IRC and SMS corpora, proper English words are sometimes concatenated together due to slang usage. Triangle (<sup>\triangle</sup>) indicates lower and upper bounds computed using average words per utterance estimated on a similar Reddit corpus <a class="tth_citation" href="./references.html#schrading2015analyzing" id="CITEschrading2015analyzing">Schrading [2015]</a>. Square (<sup><span style="font-size:x-small"><sup>[<u>&#175;</u>]</sup></span></sup>) indicates estimates based only on English part of the corpus. Note that 2.1M dialogues from the Movie Dialog dataset (<sup>\blacktriangledown</sup>) are in the form of simulated QA pairs. Dialogs indicated by () are contiguous blocks of recorded conversation in a multi-participant chat. In the case of UseNet, we note the total number of newsgroups and find the average turns as average number of posts collected per newsgroup. () indicates an estimate based on a Twitter dataset of similar size and refers to tokens as well as words.</span>
     </div>
   </div>
 </div>
 
-<span><br>
-<br>
-      <br> <h2><span>Acknowledgements</span></h2></span>
-      The authors gratefully acknowledge financial support by the <b>Samsung Advanced Institute of Technology (SAIT)</b>, the <b>Natural Sciences and Engineering Research Council of Canada (NSERC)</b>, the <b>Canada Research Chairs</b>, the <b>Canadian Institute for Advanced Research (CIFAR)</b> and <b>Compute Canada</b>. Early versions of the manuscript benefited greatly from the proofreading of Melanie Lyman-Abramovitch, and later versions were extensively revised by Genevieve Fried and Nicolas Angelard-Gontier. The authors also thank Nissan Pow, Michael Noseworthy, Chia-Wei Liu, Gabriel Forgues, Alessandro Sordoni, Yoshua Bengio and Aaron Courville for helpful discussions.
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				</section>
-			</section>
-			<footer>
-				<span></span>
-				<div id="mcgill_logo">
-					<span></span>
-					<p><span><a href="http://rl.cs.mcgill.ca/">Reasoning<br>
-					and Learning Lab</a></span></p><!-- <p><a href="http://www.cim.mcgill.ca">Center for Intelligent Machines</a></p> -->
-					<!-- <p><a href="http://www.mcgill.ca">McGill University</a></p> -->
-					<span><a href="http://www.mcgill.ca"><img src="mcgill_logo_big.png" style="padding-top: 15px;"></a></span>
-				</div><span></span>
-				<div id="ncfrn_logo">
-					<span></span>
-					<p><span><a href="http://diro.umontreal.ca/accueil/">Département d'informatique<br>
-					et de recherche opérationnelle</a></span></p><span><a href="http://umontreal.ca"><img src="Universite_de_Montreal_logo.svg"></a></span>
-				</div>
+    </div>
 
-        <!-- <div id="samsung_logo">
-          <span></span>
-          <p><span><a href="http://sait.samsung.com">Samsung Advanced Institute<br>of Technology</a></span></p><span><a href="http://www.sait.samsung.com/"><img src="samsung.png"></a></span>
-        </div><span>				 </span> -->
-			</footer><span></span>
-		</section>
-	</section>
+    <script src="./tfthing_files/underscore.min.js"></script>
+    <script src="./tfthing_files/backbone.min.js"></script>
+    <script src="./tfthing_files/d3.v3.min.js"></script>
+    <script sync src="https://platform.twitter.com/widgets.js"></script>
+    <script src="./tfthing_files/tweets.js"></script>
 </body>
+
 </html>
